@@ -4,11 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,16 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "wallets")
-public class Wallet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private int balance;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+public class Wallet extends BaseClass{
 
-    @UpdateTimestamp
-    private LocalDateTime updateddAt;
+    private int balance;
+
 
 
     @OneToOne(cascade = CascadeType.ALL)

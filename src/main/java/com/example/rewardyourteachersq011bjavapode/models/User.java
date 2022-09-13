@@ -1,18 +1,14 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 
+import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,26 +18,16 @@ import java.util.List;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "role")
+@DiscriminatorColumn(name = "user_type")
 @Table(name = "users")
-public abstract class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User  extends BaseClass implements Serializable{
     private String firstName;
     private String lastName;
-
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Column(unique = true)
     private String email;
     private String password;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updateddAt;
-
-
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user")

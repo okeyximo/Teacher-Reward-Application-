@@ -1,6 +1,4 @@
 package com.example.rewardyourteachersq011bjavapode.models;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "schools")
-public class School {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class School extends BaseClass{
     private String name;
     private String address;
 
