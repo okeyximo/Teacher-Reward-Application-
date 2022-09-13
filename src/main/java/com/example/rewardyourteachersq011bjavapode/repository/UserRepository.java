@@ -1,6 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.repository;
 
-import com.example.rewardyourteacher.models.User;
+
+import com.example.rewardyourteachersq011bjavapode.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
