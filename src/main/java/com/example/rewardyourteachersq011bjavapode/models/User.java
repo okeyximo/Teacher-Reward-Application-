@@ -1,6 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
+import com.example.rewardyourteachersq011bjavapode.enums.SocialRegLogProvider;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,9 @@ public class User  extends BaseClass implements Serializable{
     @Column(unique = true)
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private SocialRegLogProvider socialRegLogProvider;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
