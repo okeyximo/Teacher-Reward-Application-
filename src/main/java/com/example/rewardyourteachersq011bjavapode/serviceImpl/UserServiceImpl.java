@@ -21,17 +21,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public String processSocialRegistration(String email) {
 
-       // Optional<User> existingUser = userRepository.findUserByEmail(email);
 
-     //   if (existingUser.get() == null) {
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setSocialRegLogProvider(SocialRegLogProvider.GOOGLE);
             userRepository.save(newUser);
-      //  }
-     //   else {
-         //   throw new RuntimeException("Email already exist");
-    //    }
+
         return "User Successfully Registered";
     }
 }
