@@ -18,12 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
-    private final CustomUserDetailService customUserDetailService;
     private final JwtFilter jwtRequestFilter;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
-        //AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
         return auth.getAuthenticationManager();
     }
 
@@ -37,7 +34,6 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // Add a filter to validate the tokens with every request
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
