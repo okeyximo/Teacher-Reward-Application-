@@ -27,6 +27,6 @@ jobs:
       run: mvn -B package --file pom.xml -Dspring.profiles.active=test
       
     - name: Maven Package
-    - env:
+      env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: mvn -B clean package
