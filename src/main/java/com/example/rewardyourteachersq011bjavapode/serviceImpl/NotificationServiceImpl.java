@@ -1,9 +1,42 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
+import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
+import com.example.rewardyourteachersq011bjavapode.models.Notification;
+import com.example.rewardyourteachersq011bjavapode.models.User;
+import com.example.rewardyourteachersq011bjavapode.repository.NotificationRepository;
+import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
+import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationService {
+public class NotificationServiceImpl implements NotificationService {
+    private final NotificationRepository notificationRepository;
 
-    private final Noti
+    private final UserRepository userRepository;
+
+
+
+    @Autowired
+    public NotificationServiceImpl(NotificationRepository notificationRepository, UserRepository userRepository) {
+        this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public Notification saveNotification(Long userId , String message , NotificationType notificationType) {
+        Notification notification = new Notification();
+        User user = findUserById(userId);
+        notification.setNotificationBody(message);
+        notification.setUser(user);
+        notification.setNotificationType(notificationType);
+        return notificationRepository.save(notification);
+    }
+
+    public User findUserById(Long userId){
+        return userRepository.findById(userId).orElseThrow(()-> new RuntimeException());
+
+    }
+
 }
