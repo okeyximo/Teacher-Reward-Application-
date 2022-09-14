@@ -24,6 +24,8 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build and test with Maven
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: mvn -B package --file pom.xml -Dspring.profiles.active=test
       
     - name: Maven Package
