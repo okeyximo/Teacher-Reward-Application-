@@ -7,10 +7,11 @@ import com.example.rewardyourteachersq011bjavapode.repository.NotificationReposi
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
 
@@ -18,11 +19,6 @@ public class NotificationServiceImpl implements NotificationService {
 
 
 
-    @Autowired
-    public NotificationServiceImpl(NotificationRepository notificationRepository, UserRepository userRepository) {
-        this.notificationRepository = notificationRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public Notification saveNotification(Long userId , String message , NotificationType notificationType) {
