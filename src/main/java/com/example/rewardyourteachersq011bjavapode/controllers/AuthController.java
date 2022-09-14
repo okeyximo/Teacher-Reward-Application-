@@ -1,6 +1,6 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
-import com.example.rewardyourteachersq011bjavapode.Response.ApiResponse;
+import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.dto.LoginDTO;
 import com.example.rewardyourteachersq011bjavapode.exception.ResourceNotFoundException;

@@ -1,17 +1,16 @@
-package com.example.rewardyourteachersq011bjavapode.Response;
+package com.example.rewardyourteachersq011bjavapode.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ExceptionResponse {
+public class ApiResponse<T> {
     private String message;
     private LocalDateTime timeStamp;
-    private HttpStatus status;
+    private T data;
 }

@@ -1,6 +1,6 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
-import com.example.rewardyourteachersq011bjavapode.Response.ExceptionResponse;
+import com.example.rewardyourteachersq011bjavapode.response.ExceptionResponse;
 import com.example.rewardyourteachersq011bjavapode.exception.ResourceNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
