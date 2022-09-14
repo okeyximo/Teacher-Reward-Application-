@@ -17,8 +17,8 @@ import java.util.function.Function;
 @Service @Slf4j
 public class JwtUtil {
 
-    @Value("${jwt.signing.key.secret}")
-    private  String secret;
+    @Value("${jwt.signing.key.secret:decagonsquad11bpode}")
+    private  String secret ;
 
   //  @Value("${jwt.token.expiration.in.seconds}")
     private final  int expirationTime = 1000 * 60 * 60 * 10;
