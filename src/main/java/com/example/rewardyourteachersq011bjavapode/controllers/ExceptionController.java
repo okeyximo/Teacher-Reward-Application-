@@ -21,4 +21,5 @@ public class ExceptionController {
     public ResponseEntity<ExceptionResponse> resourceNotFoundHandler(ResourceNotFoundException exception){
         return responseService.response(new ExceptionResponse(exception.getMessage(), LocalDateTime.now() , HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
+
 }

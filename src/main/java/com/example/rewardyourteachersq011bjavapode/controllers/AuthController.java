@@ -23,10 +23,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+
+    private final JwtUtil jwtUtil;
+
+    private final AuthenticationManager authenticationManager;
 
     private final ResponseService<ApiResponse<String>> responseService;
     @PostMapping("/authenticate")
@@ -35,10 +35,10 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
-        } catch (Exception ex) {
+        } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("invalid username or password");
         }
-        return  responseService.response(new ApiResponse<String>("success" , LocalDateTime.now() , jwtUtil.generateToken(authRequest.getEmail())) , HttpStatus.OK);// return jwtUtil.generateToken(authRequest.getEmail());
+        return  responseService.response(new ApiResponse<String>("success" , LocalDateTime.now() , jwtUtil.generateToken(authRequest.getEmail())) , HttpStatus.OK);
     }
 
 }
