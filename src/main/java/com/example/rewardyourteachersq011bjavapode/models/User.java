@@ -22,10 +22,16 @@ import java.util.List;
 @Table(name = "users")
 public class User  extends BaseClass implements Serializable{
     private String name;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 590f370657339e7706290c7a726df0b5bb477140
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @Column(unique = true)
     private String email;
+
     private String password;
 
     @JsonManagedReference
@@ -40,12 +46,16 @@ public class User  extends BaseClass implements Serializable{
     @OneToMany(mappedBy = "user")
     private List<Notification> notificationList = new ArrayList<>();
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
-    private School school;
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
+    private String school;
 
+<<<<<<< HEAD
     public User(Long id, LocalDateTime createDate, LocalDateTime updateDate,  String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
+=======
+    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school) {
+>>>>>>> 590f370657339e7706290c7a726df0b5bb477140
         super(id, createDate, updateDate);
         this.name = name;
         this.role = role;

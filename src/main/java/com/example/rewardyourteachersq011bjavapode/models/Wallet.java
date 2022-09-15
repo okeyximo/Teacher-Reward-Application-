@@ -16,8 +16,6 @@ public class Wallet extends BaseClass{
 
     private int balance;
 
-
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "id" )
     private User user;
