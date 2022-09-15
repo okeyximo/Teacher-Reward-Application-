@@ -18,12 +18,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class TeacherController {
-    private final UserService userService;
 
 
-    @PostMapping(value = "/register-teacher")
-    public ResponseEntity<TeacherRegistrationResponse> registerTeacher(TeacherDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
-        log.info("Successfully Registered {} ", teacherDto.getEmail());
-        return new ResponseEntity<>(userService.registerTeacher(teacherDto, teacherIdImage), CREATED);
-    }
 }
