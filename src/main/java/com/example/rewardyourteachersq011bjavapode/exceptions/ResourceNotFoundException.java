@@ -1,4 +1,4 @@
-package com.example.rewardyourteachersq011bjavapode.exception;
+package com.example.rewardyourteachersq011bjavapode.exceptions;
 
 import lombok.*;
 
