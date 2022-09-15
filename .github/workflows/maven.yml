@@ -9,18 +9,25 @@ on:
   pull_request:
     branches: [ develop ]
 
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v2
       with:
         java-version: '17'
-        distribution: 'temurin'
+        distribution: 'adopt'
         cache: maven
     - name: Build and test with Maven
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
+        CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+        CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
       run: mvn -B package --file pom.xml -Dspring.profiles.active=test
+
