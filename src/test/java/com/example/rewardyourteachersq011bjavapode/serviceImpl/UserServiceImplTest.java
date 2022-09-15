@@ -2,6 +2,7 @@ package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
+import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import com.example.rewardyourteachersq011bjavapode.enums.Status;
@@ -61,7 +62,7 @@ class UserServiceImplTest {
         user = new User(1L , localDateTime , localDateTime , "chioma", Role.STUDENT,"chioma@gmail.com","1234",transactionList, messageList, notificationList, "school");
         teacher = new Teacher("20", Status.INSERVICE, SchoolType.SECONDARY,"oxy.png",subjectList);
         message = new Message("new message", user);
-        notification = new Notification("alertz", user);
+        notification = new Notification("alertz", NotificationType.CREDIT_NOTIFICATION ,user);
         subject = new Subject("Economics");
 
 
