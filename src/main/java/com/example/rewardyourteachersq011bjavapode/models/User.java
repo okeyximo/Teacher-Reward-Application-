@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,12 +21,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type")
 @Table(name = "users")
-public class User  extends BaseClass implements Serializable{
+public class User extends BaseClass implements Serializable {
     private String name;
-<<<<<<< HEAD
-=======
-
->>>>>>> 590f370657339e7706290c7a726df0b5bb477140
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -46,16 +43,13 @@ public class User  extends BaseClass implements Serializable{
     @OneToMany(mappedBy = "user")
     private List<Notification> notificationList = new ArrayList<>();
 
-//    @JsonBackReference
+    //    @JsonBackReference
 //    @ManyToOne
 //    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
     private String school;
 
-<<<<<<< HEAD
-    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate,  String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
-=======
+
     public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school) {
->>>>>>> 590f370657339e7706290c7a726df0b5bb477140
         super(id, createDate, updateDate);
         this.name = name;
         this.role = role;

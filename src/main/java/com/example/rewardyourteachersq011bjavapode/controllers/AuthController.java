@@ -16,6 +16,7 @@ import com.example.rewardyourteachersq011bjavapode.response.TeacherRegistrationR
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
+import com.example.rewardyourteachersq011bjavapode.serviceImpl.GoogleOAuth2ServiceImpl;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +38,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
-
     private final UserService userService;
+    private final GoogleOAuth2ServiceImpl googleOAuth2Service;
 
     private final JwtUtil jwtUtil;
 
@@ -65,7 +66,7 @@ public class AuthController {
 
     @PostMapping("/oauth2/callback")
     public ResponseEntity<ApiResponse> authenticateOauth2(@RequestBody GoogleOAuth2UserDto principal){
-            return userService.OAuth2Authenticate(principal);
+            return googleOAuth2Service.OAuth2Authenticate(principal);
         }
     @PostMapping(value = "/register-student")
     public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserDto userDto) {

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
-public class GoogleOAuth2ServiceImpl implements UserService {
+public class GoogleOAuth2ServiceImpl {
 
     private final UserRepository userRepository;
 
@@ -33,7 +33,6 @@ public class GoogleOAuth2ServiceImpl implements UserService {
 
     private final ResponseService responder;
 
-    @Override
     public ResponseEntity<ApiResponse> OAuth2Authenticate(GoogleOAuth2UserDto principal) {
         User existingUser = userRepository.findUserByEmail(principal.getEmail()).orElse(null);
         if (existingUser == null) {
@@ -47,14 +46,5 @@ public class GoogleOAuth2ServiceImpl implements UserService {
         return responder.response(new ApiResponse<String>("success" , LocalDateTime.now() , token) , HttpStatus.OK);
     }
 
-    @Override
-    public UserRegistrationResponse registerUser(UserDto userDto) {
-        return null;
-    }
-
-    @Override
-    public TeacherRegistrationResponse registerTeacher(TeacherDto teacherDto, MultipartFile teacherId) throws IOException {
-        return null;
-    }
 }
 

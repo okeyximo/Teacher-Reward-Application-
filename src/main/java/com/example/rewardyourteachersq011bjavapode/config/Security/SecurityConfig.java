@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtFilter jwtRequestFilter;
     private final UserDetailsService userDetailsService;
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
         return auth.getAuthenticationManager();
@@ -32,11 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-<<<<<<< HEAD
-                .antMatchers("/api/authenticate" , "/" , "/api/register-student" , "/api/register-teacher" , "/login" , "/api/oauth2/callback")
-=======
                 .antMatchers("/api/auth/**")
->>>>>>> 590f370657339e7706290c7a726df0b5bb477140
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -48,7 +45,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
+    public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
