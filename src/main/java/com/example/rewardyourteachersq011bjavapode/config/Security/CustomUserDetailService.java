@@ -1,7 +1,6 @@
 package com.example.rewardyourteachersq011bjavapode.config.Security;
 
-import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
-import com.example.rewardyourteachersq011bjavapode.exception.ResourceNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
