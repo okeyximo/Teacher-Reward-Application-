@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -21,12 +22,14 @@ import java.util.List;
 @DiscriminatorColumn(name = "user_type")
 @Table(name = "users")
 public class User  extends BaseClass implements Serializable{
-    private String firstName;
-    private String lastName;
+    private String name;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @Column(unique = true)
     private String email;
+
     private String password;
 
     @JsonManagedReference
@@ -41,10 +44,21 @@ public class User  extends BaseClass implements Serializable{
     @OneToMany(mappedBy = "user")
     private List<Notification> notificationList = new ArrayList<>();
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
-    private School school;
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
+    private String school;
 
+    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school) {
+        super(id, createDate, updateDate);
+        this.name = name;
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.transactionList = transactionList;
+        this.messageList = messageList;
+        this.notificationList = notificationList;
+        this.school = school;
+    }
 }
 
