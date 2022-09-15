@@ -49,10 +49,9 @@ public class User  extends BaseClass implements Serializable{
     @JoinColumn(name = "schoolId" , referencedColumnName = "id")
     private School school;
 
-    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String firstName, String lastName, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
+    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
         super(id, createDate, updateDate);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.role = role;
         this.email = email;
         this.password = password;
