@@ -1,10 +1,8 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
-import com.example.rewardyourteachersq011bjavapode.enums.SocialRegLogProvider;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,16 +21,12 @@ import java.util.List;
 @DiscriminatorColumn(name = "user_type")
 @Table(name = "users")
 public class User  extends BaseClass implements Serializable{
-    private String firstName;
-    private String lastName;
+    private String name;
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(unique = true)
     private String email;
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    private SocialRegLogProvider socialRegLogProvider;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
@@ -51,10 +45,9 @@ public class User  extends BaseClass implements Serializable{
     @JoinColumn(name = "schoolId" , referencedColumnName = "id")
     private School school;
 
-    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String firstName, String lastName, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
+    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate,  String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
         super(id, createDate, updateDate);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.role = role;
         this.email = email;
         this.password = password;
