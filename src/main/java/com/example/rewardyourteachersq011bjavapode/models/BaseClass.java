@@ -22,8 +22,10 @@ public abstract class BaseClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
+
     @CreationTimestamp
     private LocalDateTime createDate;
+
     @UpdateTimestamp
     private LocalDateTime updateDate;
 

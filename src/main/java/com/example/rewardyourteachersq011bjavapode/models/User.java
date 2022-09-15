@@ -21,12 +21,14 @@ import java.util.List;
 @DiscriminatorColumn(name = "user_type")
 @Table(name = "users")
 public class User  extends BaseClass implements Serializable{
-    private String firstName;
-    private String lastName;
+    private String name;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @Column(unique = true)
     private String email;
+
     private String password;
 
     @JsonManagedReference
