@@ -3,6 +3,7 @@ package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserAlreadyExistException;
+import com.example.rewardyourteachersq011bjavapode.models.School;
 import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
 
-     private BCryptPasswordEncoder passwordEncoder;
+     private final PasswordEncoder passwordEncoder;
     private final UserUtil userUtil;
 
 
@@ -38,9 +39,7 @@ public class UserServiceImpl implements UserService {
         String email = userDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
         if(existingUser.isEmpty()){
-            passwordEncoder = new BCryptPasswordEncoder();
             User user = new User();
-
             user.setName(userDto.getName());
             user.setEmail(userDto.getEmail());
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -52,8 +51,6 @@ public class UserServiceImpl implements UserService {
         }
 
     }
-
-
 
     @Override
     public TeacherRegistrationResponse registerTeacher(TeacherDto teacherDto, MultipartFile teacherId) throws IOException {
@@ -76,6 +73,4 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistException("User already exist");
         }
     }
-
-
 }

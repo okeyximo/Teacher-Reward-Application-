@@ -15,7 +15,7 @@ public class TeacherDto {
     private String name;
     private String email;
     private String password;
-    private School school;
+    private String school;
     private String teachingPeriod;
     private List<Subject> subjectList;
     private SchoolType schoolType;

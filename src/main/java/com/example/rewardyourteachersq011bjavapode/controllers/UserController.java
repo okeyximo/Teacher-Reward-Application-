@@ -4,6 +4,7 @@ import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.response.TeacherRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @Slf4j
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
 
     @PostMapping(value = "/register-student")
