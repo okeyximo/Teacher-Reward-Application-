@@ -58,7 +58,7 @@ class UserServiceImplTest {
     @BeforeEach
     void setUp() {
         localDateTime = LocalDateTime.of(2022, SEPTEMBER,14,6,30,40,50000);
-        user = new User("chioma", Role.STUDENT,"chioma@gmail.com","1234",transactionList, messageList, notificationList, school);
+        user = new User(1L , localDateTime , localDateTime , "chioma", Role.STUDENT,"chioma@gmail.com","1234",transactionList, messageList, notificationList, school);
         teacher = new Teacher("20", Status.INSERVICE, SchoolType.SECONDARY,"oxy.png",subjectList);
         school = new School("British","Ajah",userList);
         message = new Message("new message", user);
