@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -48,5 +49,17 @@ public class User  extends BaseClass implements Serializable{
     @JoinColumn(name = "schoolId" , referencedColumnName = "id")
     private School school;
 
+    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String firstName, String lastName, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, School school) {
+        super(id, createDate, updateDate);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.transactionList = transactionList;
+        this.messageList = messageList;
+        this.notificationList = notificationList;
+        this.school = school;
+    }
 }
 
