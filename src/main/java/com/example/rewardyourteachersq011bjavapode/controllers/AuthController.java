@@ -34,7 +34,6 @@ public class AuthController {
     private final ResponseService<ApiResponse<String>> responseService;
     @PostMapping("/authenticate")
     public ResponseEntity<?> generateToken(@RequestBody LoginDTO authRequest) throws ResourceNotFoundException {
-        log.info("Got here");
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
