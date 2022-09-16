@@ -17,8 +17,6 @@ public class NotificationServiceImpl implements NotificationService {
     private final UserRepository userRepository;
 
 
-
-
     @Override
     public Notification saveNotification(Long userId , String message , NotificationType notificationType) {
         Notification notification = new Notification();
@@ -30,8 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public User findUserById(Long userId){
-        return userRepository.findById(userId).orElseThrow(()-> new RuntimeException());
-
+        return userRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 
 }
