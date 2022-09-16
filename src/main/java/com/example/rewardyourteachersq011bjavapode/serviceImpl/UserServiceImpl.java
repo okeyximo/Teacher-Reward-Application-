@@ -4,8 +4,10 @@ import com.example.rewardyourteachersq011bjavapode.dto.TeacherDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserAlreadyExistException;
 import com.example.rewardyourteachersq011bjavapode.models.School;
+import com.example.rewardyourteachersq011bjavapode.models.Subject;
 import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
+import com.example.rewardyourteachersq011bjavapode.repository.SubjectRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.response.TeacherRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
@@ -27,6 +29,7 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final SubjectRepository subjectRepository;
 
 
      private final PasswordEncoder passwordEncoder;
@@ -64,13 +67,24 @@ public class UserServiceImpl implements UserService {
             teacher.setPassword(passwordEncoder.encode(teacherDto.getPassword()));
             teacher.setSchool(teacherDto.getSchool());
             teacher.setTeachingPeriod(teacherDto.getTeachingPeriod());
-            teacher.setSubject(teacherDto.getSubjectList());
             teacher.setSchoolType(teacherDto.getSchoolType());
             teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
+
+
+            teacherDto.getSubjectList().forEach(subject -> {
+                subjectRepository.save(new Subject(subject , teacher));
+            });
+
             return new TeacherRegistrationResponse("success", LocalDateTime.now(),teacherDto);
         }else{
             throw new UserAlreadyExistException("User already exist");
         }
+
+        //["English" , "Maths" , "Biology"]
+
+       // new Subject("english" , teacher); //3
+
+
     }
 }

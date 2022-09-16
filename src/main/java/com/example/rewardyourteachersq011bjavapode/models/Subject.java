@@ -13,4 +13,8 @@ import javax.persistence.*;
 public class Subject extends BaseClass{
     private String nameOfSubject;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id" , referencedColumnName = "id")
+    private Teacher teacher;
+
 }

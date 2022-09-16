@@ -65,6 +65,4 @@ class UserRepositoryTest {
         }).isInstanceOf(ResourceNotFoundException.class);
 
     }
-
-
 }

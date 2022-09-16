@@ -64,9 +64,6 @@ class UserServiceImplTest {
         message = new Message("new message", user);
         notification = new Notification("alertz", NotificationType.CREDIT_NOTIFICATION ,user);
         subject = new Subject("Economics");
-
-
-
     }
 
 //    @Test
