@@ -9,6 +9,4 @@ import java.time.LocalDateTime;
 public class UserRegistrationResponse {
     private String message;
     private LocalDateTime timeStamp;
-    private UserDto userDto;
-
 }
