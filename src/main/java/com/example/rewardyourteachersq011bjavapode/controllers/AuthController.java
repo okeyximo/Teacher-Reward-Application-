@@ -76,11 +76,12 @@ public class AuthController {
 
 
     @PutMapping("/logout")
-    public ResponseEntity<?> logoutUser(@CurrentUser CustomUserDetails currentUser, @RequestBody LogOutRequest logOutRequest) {
+//    public ResponseEntity<?> logoutUser(@CurrentUser CustomUserDetails currentUser, @RequestBody LogOutRequest logOutRequest) {
+ public ResponseEntity<?> logoutUser(@RequestBody LogOutRequest logOutRequest) {
 
-        OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(currentUser.getUsername(), logOutRequest.getToken());
+        OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(logOutRequest.getEmail(), logOutRequest.getToken());
         applicationEventPublisher.publishEvent(logoutSuccessEvent);
-        String response = currentUser.getUsername() + " has successfully logged out from the system!";
+        String response = logOutRequest.getEmail() + " has successfully logged out from the system!";
         return ResponseEntity.ok(new ApiResponse<String>("success", LocalDateTime.now(), response));
 
     }

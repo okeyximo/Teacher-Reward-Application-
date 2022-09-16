@@ -63,7 +63,7 @@ public class JwtUtil {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         // todo : check if token is blacklisted -> if no process. else return false
-//        validateTokenIsNotForALoggedOutDevice(token);
+        validateTokenIsNotForALoggedOutDevice(token);
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

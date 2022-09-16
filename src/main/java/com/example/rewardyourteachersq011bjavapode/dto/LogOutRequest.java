@@ -8,7 +8,13 @@ import javax.validation.constraints.NotNull;
 @Data
 public class LogOutRequest {
 
+
+    @Valid
+    @NotNull
+    private String email;
     @Valid
     @NotNull(message = "Existing Token needs to be passed")
     private String token;
+
+
 }

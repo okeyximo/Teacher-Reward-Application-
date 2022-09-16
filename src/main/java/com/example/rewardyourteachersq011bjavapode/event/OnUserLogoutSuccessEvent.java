@@ -1,7 +1,5 @@
 package com.example.rewardyourteachersq011bjavapode.event;
 
-import com.example.rewardyourteachersq011bjavapode.response.LogOutRequest;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
