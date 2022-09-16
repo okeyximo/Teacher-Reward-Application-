@@ -43,9 +43,7 @@ public class AuthController {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
-
             );
-
         } catch (AuthenticationException ex) {
             log.error(ex.getMessage());
             throw new ResourceNotFoundException("invalid username or password");
