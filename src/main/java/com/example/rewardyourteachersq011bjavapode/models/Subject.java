@@ -17,4 +17,6 @@ public class Subject extends BaseClass{
     @JoinColumn(name = "teacher_id" , referencedColumnName = "id")
     private Teacher teacher;
 
+
+
 }

@@ -63,7 +63,7 @@ class UserServiceImplTest {
         teacher = new Teacher("20", Status.INSERVICE, SchoolType.SECONDARY,"oxy.png",subjectList);
         message = new Message("new message", user);
         notification = new Notification("alertz", NotificationType.CREDIT_NOTIFICATION ,user);
-        subject = new Subject("Economics");
+        subject = new Subject("Economics" , teacher);
     }
 
 //    @Test
