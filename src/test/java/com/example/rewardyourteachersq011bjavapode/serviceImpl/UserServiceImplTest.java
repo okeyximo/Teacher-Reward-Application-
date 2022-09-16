@@ -38,7 +38,6 @@ class UserServiceImplTest {
     private List<Transaction> transactionList;
     private List<Message> messageList;
     private List<Notification> notificationList;
-    private TeacherRegistrationResponse teacherRegistrationResponse;
     private UserRegistrationResponse userRegistrationResponse;
 
     private School school;
