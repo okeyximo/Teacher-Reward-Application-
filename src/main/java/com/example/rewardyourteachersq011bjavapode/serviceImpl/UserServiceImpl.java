@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
             teacher.setSubject(teacherDto.getSubjectList());
             teacher.setSchoolType(teacherDto.getSchoolType());
             teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
-            user.setRole(Role.STUDENT);
+            teacher.setRole(Role.TEACHER);
             userRepository.save(teacher);
             return new TeacherRegistrationResponse("success", LocalDateTime.now(),teacherDto);
         }else{
