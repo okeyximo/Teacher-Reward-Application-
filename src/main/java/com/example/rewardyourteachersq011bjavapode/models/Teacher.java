@@ -1,13 +1,16 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 
 
+import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import com.example.rewardyourteachersq011bjavapode.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.*;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -19,9 +22,20 @@ import javax.persistence.*;
 public class Teacher extends User{
 
     private String teachingPeriod;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private SchoolType schoolType;
+
+
+
+    private  String teacherIdUrl;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private List<Subject> subject;
 
 
 }

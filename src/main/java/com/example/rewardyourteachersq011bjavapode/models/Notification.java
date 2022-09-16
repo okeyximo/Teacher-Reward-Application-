@@ -1,5 +1,6 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 
+import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,8 @@ import javax.persistence.*;
 public class Notification extends BaseClass{
 
     private String notificationBody;
+    @Enumerated(EnumType.STRING)
+    private NotificationType notificationType;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId" , referencedColumnName = "id")
