@@ -35,6 +35,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -82,6 +84,24 @@ public class AuthController {
         OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(logOutRequest.getEmail(), logOutRequest.getToken());
         applicationEventPublisher.publishEvent(logoutSuccessEvent);
         String response = logOutRequest.getEmail() + " has successfully logged out from the system!";
+        return ResponseEntity.ok(new ApiResponse<String>("success", LocalDateTime.now(), response));
+
+    }
+
+   @GetMapping("/logout")
+    public ResponseEntity<?> logoutUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        String token = null;
+        String userName = null;
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            token = authorizationHeader.substring(7);
+            userName = jwtUtil.extractUsername(token);
+        }
+        OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(userName, token);
+        applicationEventPublisher.publishEvent(logoutSuccessEvent);
+        String response = userName + " has successfully logged out from the system!";
         return ResponseEntity.ok(new ApiResponse<String>("success", LocalDateTime.now(), response));
 
     }
