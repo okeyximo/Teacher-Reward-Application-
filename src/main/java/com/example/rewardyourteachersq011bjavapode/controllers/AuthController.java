@@ -1,48 +1,27 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
 
-import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
-import com.example.rewardyourteachersq011bjavapode.dto.LogOutRequest;
-import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.dto.LoginDTO;
-import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 
-import com.example.rewardyourteachersq011bjavapode.dto.TeacherDto;
+import com.example.rewardyourteachersq011bjavapode.dto.PrincipalDto;
+import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
-import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
-import com.example.rewardyourteachersq011bjavapode.dto.LoginDTO;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
-import com.example.rewardyourteachersq011bjavapode.response.TeacherRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
-import com.example.rewardyourteachersq011bjavapode.service.UserService;
-import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.example.rewardyourteachersq011bjavapode.service.AuthService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -52,71 +31,24 @@ import static org.springframework.http.HttpStatus.CREATED;
 @Slf4j
 public class AuthController {
 
-
-    private final UserService userService;
-
-    private final JwtUtil jwtUtil;
-    private final AuthenticationManager authenticationManager;
-    private final ResponseService<ApiResponse<String>> responseService;
-    private final ApplicationEventPublisher applicationEventPublisher;
+    private final AuthService authService;
+    private final ResponseService<ApiResponse<PrincipalDto>> responseService;
 
     @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginDTO authRequest) throws ResourceNotFoundException {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
-
-            );
-
-        } catch (AuthenticationException ex) {
-            log.error(ex.getMessage());
-            throw new ResourceNotFoundException("invalid username or password");
-        }
-
-        return responseService.response(new ApiResponse<String>("success", LocalDateTime.now(), jwtUtil.generateToken(authRequest.getEmail())), HttpStatus.OK);
-    }
-
-
-    @PutMapping("/logout")
-//    public ResponseEntity<?> logoutUser(@CurrentUser CustomUserDetails currentUser, @RequestBody LogOutRequest logOutRequest) {
- public ResponseEntity<?> logoutUser(@RequestBody LogOutRequest logOutRequest) {
-
-        OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(logOutRequest.getEmail(), logOutRequest.getToken());
-        applicationEventPublisher.publishEvent(logoutSuccessEvent);
-        String response = logOutRequest.getEmail() + " has successfully logged out from the system!";
-        return ResponseEntity.ok(new ApiResponse<String>("success", LocalDateTime.now(), response));
-
-    }
-
-   @GetMapping("/logout")
-    public ResponseEntity<?> logoutUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        String token = null;
-        String userName = null;
-
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7);
-            userName = jwtUtil.extractUsername(token);
-        }
-        OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(userName, token);
-        applicationEventPublisher.publishEvent(logoutSuccessEvent);
-        String response = userName + " has successfully logged out from the system!";
-        return ResponseEntity.ok(new ApiResponse<String>("success", LocalDateTime.now(), response));
-
+        return responseService.response(authService.loginUser(authRequest), HttpStatus.OK);
     }
 
     @PostMapping(value = "/register-student")
     public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserDto userDto) {
         log.info("Successfully Registered {} ", userDto.getEmail());
-        return new ResponseEntity<>(userService.registerUser(userDto), CREATED);
+        return new ResponseEntity<>(authService.registerUser(userDto), CREATED);
     }
 
-
     @PostMapping(value = "/register-teacher")
-    public ResponseEntity<TeacherRegistrationResponse> registerTeacher(TeacherDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
+    public ResponseEntity<UserRegistrationResponse> registerTeacher(TeacherRegistrationDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
         log.info("Successfully Registered {} ", teacherDto.getEmail());
-        return new ResponseEntity<>(userService.registerTeacher(teacherDto, teacherIdImage), CREATED);
+        return new ResponseEntity<>(authService.registerTeacher(teacherDto, teacherIdImage), CREATED);
     }
 
 }

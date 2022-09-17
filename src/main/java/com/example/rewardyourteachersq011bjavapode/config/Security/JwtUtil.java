@@ -2,12 +2,13 @@ package com.example.rewardyourteachersq011bjavapode.config.Security;
 
 import com.example.rewardyourteachersq011bjavapode.cache.LoggedOutJwtTokenCache;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
-import com.example.rewardyourteachersq011bjavapode.exception.InvalidTokenRequestException;
+import com.example.rewardyourteachersq011bjavapode.exceptions.InvalidTokenRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class JwtUtil {
 
     @Value("${jwt.signing.key.secret:decagonsquad11bpode}")
     private  String secret ;
+   @Autowired
     private LoggedOutJwtTokenCache tokenBlackListCache;
 
   //  @Value("${jwt.token.expiration.in.seconds}")
