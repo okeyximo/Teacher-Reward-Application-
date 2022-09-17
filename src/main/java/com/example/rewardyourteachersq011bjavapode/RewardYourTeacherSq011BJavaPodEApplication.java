@@ -2,6 +2,7 @@ package com.example.rewardyourteachersq011bjavapode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.cloudinary.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.File;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableSwagger2
+@EnableWebMvc
 public class RewardYourTeacherSq011BJavaPodEApplication {
 
     public static void main(String[] args) throws IOException {
