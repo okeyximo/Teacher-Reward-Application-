@@ -24,7 +24,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(InvalidTokenRequestException.class)
-    public ResponseEntity<ExceptionResponse> InvalidTokenHandler(ResourceNotFoundException exception){
+    public ResponseEntity<ExceptionResponse> InvalidTokenHandler(InvalidTokenRequestException exception){
         return responseService.response(new ExceptionResponse(exception.getMessage(), LocalDateTime.now() , HttpStatus.NOT_ACCEPTABLE), HttpStatus.NOT_ACCEPTABLE);
     }
 

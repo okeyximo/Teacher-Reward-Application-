@@ -22,10 +22,4 @@ public class UserController {
         return new ResponseEntity<>(userService.logoutUser(currentUser, bearToken), OK);
     }
 
-    @GetMapping ("/test")
-    public String test(){
-        return "got here";
-    }
-
-
 }

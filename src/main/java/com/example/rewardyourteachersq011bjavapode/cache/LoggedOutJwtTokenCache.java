@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import net.jodah.expiringmap.ExpiringMap;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
@@ -24,6 +25,7 @@ public class LoggedOutJwtTokenCache {
     private static final Logger logger = LoggerFactory.getLogger(LoggedOutJwtTokenCache.class);
 
     private final ExpiringMap<String, OnUserLogoutSuccessEvent> tokenEventMap;
+    @Lazy
     private final JwtUtil jwtUtil;
 
     @Autowired
