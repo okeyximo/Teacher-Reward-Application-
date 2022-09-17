@@ -1,6 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
+import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.models.Notification;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.repository.NotificationRepository;
@@ -30,7 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public User findUserById(Long userId){
-        return userRepository.findById(userId).orElseThrow(()-> new RuntimeException());
+        return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User with id " + userId + " not found"));
 
     }
 
