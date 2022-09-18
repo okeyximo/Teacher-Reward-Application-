@@ -18,8 +18,6 @@ public class NotificationServiceImpl implements NotificationService {
     private final UserRepository userRepository;
 
 
-
-
     @Override
     public Notification saveNotification(Long userId , String message , NotificationType notificationType) {
         Notification notification = new Notification();
@@ -30,9 +28,10 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.save(notification);
     }
 
-    public User findUserById(Long userId){
-        return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User with id " + userId + " not found"));
+    public User findUserById(Long userId) {
+
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
+
 
     }
-
 }

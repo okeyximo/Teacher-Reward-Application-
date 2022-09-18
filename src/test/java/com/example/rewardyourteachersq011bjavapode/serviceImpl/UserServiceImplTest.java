@@ -1,17 +1,13 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
-import com.example.rewardyourteachersq011bjavapode.dto.TeacherDto;
-import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import com.example.rewardyourteachersq011bjavapode.enums.Status;
 import com.example.rewardyourteachersq011bjavapode.models.*;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
-import com.example.rewardyourteachersq011bjavapode.response.TeacherRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +18,6 @@ import java.util.List;
 
 import static java.util.Calendar.SEPTEMBER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -43,7 +38,6 @@ class UserServiceImplTest {
     private List<Transaction> transactionList;
     private List<Message> messageList;
     private List<Notification> notificationList;
-    private TeacherRegistrationResponse teacherRegistrationResponse;
     private UserRegistrationResponse userRegistrationResponse;
 
     private School school;
@@ -63,10 +57,7 @@ class UserServiceImplTest {
         teacher = new Teacher("20", Status.INSERVICE, SchoolType.SECONDARY,"oxy.png",subjectList);
         message = new Message("new message", user);
         notification = new Notification("alertz", NotificationType.CREDIT_NOTIFICATION ,user);
-        subject = new Subject("Economics");
-
-
-
+        subject = new Subject("Economics" , teacher);
     }
 
 //    @Test
@@ -84,7 +75,7 @@ class UserServiceImplTest {
 
 //    @Test
 //    void registerTeacher() {
-//        TeacherDto teacherDto = new TeacherDto("vincent","vincent@gmail.com","12345","school","20", subjectList,SchoolType.SECONDARY);\
+//        TeacherRegistrationDto teacherDto = new TeacherRegistrationDto("vincent","vincent@gmail.com","12345","school","20", subjectList,SchoolType.SECONDARY);\
 //        when(userRepository.save(teacher)).thenReturn(teacher);
 //        var actual = userService.registerTeacher(teacherDto,);
 //        teacherRegistrationResponse = new TeacherRegistrationResponse("success",localDateTime, teacherDto);

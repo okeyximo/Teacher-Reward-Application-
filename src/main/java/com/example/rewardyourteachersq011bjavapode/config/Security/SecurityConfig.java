@@ -37,7 +37,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().logout().deleteCookies("JSESSIONID")
+                .and().logout().invalidateHttpSession(true);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -52,3 +54,4 @@ public class SecurityConfig {
         auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 }
+
