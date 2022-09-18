@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import com.example.rewardyourteachersq011bjavapode.exceptions.*;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +21,11 @@ public class ExceptionController {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ExceptionResponse> resourceNotFoundHandler(ResourceNotFoundException exception){
         return responseService.response(new ExceptionResponse(exception.getMessage(), LocalDateTime.now() , HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidTokenRequestException.class)
+    public ResponseEntity<ExceptionResponse> InvalidTokenHandler(InvalidTokenRequestException exception){
+        return responseService.response(new ExceptionResponse(exception.getMessage(), LocalDateTime.now() , HttpStatus.NOT_ACCEPTABLE), HttpStatus.NOT_ACCEPTABLE);
     }
 
 }
