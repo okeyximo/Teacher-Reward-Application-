@@ -1,8 +1,13 @@
-package com.example.rewardyourteachersq011bjavapode.config;
+package com.example.rewardyourteachersq011bjavapode.config.DocumentationConfig;
 
 
+//import io.swagger.v3.oas.models.OpenAPI;
+//import io.swagger.v3.oas.models.info.Contact;
+//import io.swagger.v3.oas.models.info.Info;
+//import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,14 +17,12 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Configuration
+@EnableSwagger2
 
-public class SwaggerConfig implements WebMvcConfigurer {
-
+public class SwaggerConfig implements WebMvcConfigurer{
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private ApiInfo apiInfo() {
@@ -55,13 +58,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .build();
     }
 
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-                = new AuthorizationScope("global", "accessEverything");
+    private List<SecurityReference> defaultAuth(){
+        AuthorizationScope authorizationScope = new AuthorizationScope("global","accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-
     }
 
-    }
+
+}
