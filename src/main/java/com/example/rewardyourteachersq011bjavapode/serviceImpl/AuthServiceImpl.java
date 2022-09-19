@@ -5,7 +5,6 @@ import com.example.rewardyourteachersq011bjavapode.dto.LoginDTO;
 import com.example.rewardyourteachersq011bjavapode.dto.PrincipalDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
-import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserAlreadyExistException;
 import com.example.rewardyourteachersq011bjavapode.models.Subject;
@@ -32,7 +31,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.example.rewardyourteachersq011bjavapode.enums.Role.*;
+import static com.example.rewardyourteachersq011bjavapode.enums.Role.STUDENT;
+import static com.example.rewardyourteachersq011bjavapode.enums.Role.TEACHER;
 
 @RequiredArgsConstructor
 @Service
@@ -84,10 +84,8 @@ public class AuthServiceImpl implements AuthService {
             teacher.setRole(TEACHER);
             teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
-
-
             teacherDto.getSubjectList().forEach(subject -> {
-                subjectRepository.save(new Subject(subject , teacher));
+                subjectRepository.save(    new Subject(subject , teacher)   );
             });
 
             return new UserRegistrationResponse("success", LocalDateTime.now());
