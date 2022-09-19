@@ -1,9 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -20,5 +18,6 @@ public class Wallet extends BaseClass{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "id" )
     private User user;
+
 
 }

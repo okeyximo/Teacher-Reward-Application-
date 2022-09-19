@@ -1,12 +1,14 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+import com.example.rewardyourteachersq011bjavapode.dto.FundWalletDto;
 import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -21,5 +23,8 @@ public class UserController {
     public ResponseEntity<?> logoutUser(@CurrentUser CustomUserDetails currentUser, @RequestHeader("Authorization") String bearToken) {
         return new ResponseEntity<>(userService.logoutUser(currentUser, bearToken), OK);
     }
-
+    @PutMapping("/fund-wallet")
+    public ResponseEntity<?> fundWallet(@CurrentUser CustomUserDetails customUserDetails, @RequestBody FundWalletDto fundWalletDto){
+        return new ResponseEntity<>(userService.fundWallet(customUserDetails, fundWalletDto.amount()), OK);
+    }
 }
