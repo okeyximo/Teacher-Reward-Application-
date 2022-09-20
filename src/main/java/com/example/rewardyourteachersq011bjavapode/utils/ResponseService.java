@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public  class ResponseService<T>{
 
     private T response;

@@ -11,8 +11,10 @@ import com.example.rewardyourteachersq011bjavapode.exceptions.UserAlreadyExistEx
 import com.example.rewardyourteachersq011bjavapode.models.Subject;
 import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
+import com.example.rewardyourteachersq011bjavapode.models.Wallet;
 import com.example.rewardyourteachersq011bjavapode.repository.SubjectRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
+import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.service.AuthService;
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -41,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
-
+ private final WalletRepository walletRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final UserUtil userUtil;
@@ -62,6 +65,8 @@ public class AuthServiceImpl implements AuthService {
             user.setSchool(userDto.getSchool());
             user.setRole(STUDENT);
             userRepository.save(user);
+            //Wallet wallet = new Wallet(new BigDecimal(0),user);
+            //walletRepository.save(wallet);
             return new UserRegistrationResponse("success", LocalDateTime.now());
         }else {
             throw new UserAlreadyExistException("User already exist");
@@ -84,6 +89,8 @@ public class AuthServiceImpl implements AuthService {
             teacher.setRole(TEACHER);
             teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
+//            Wallet wallet = new Wallet(new BigDecimal(0),teacher);
+//            walletRepository.save(wallet);
 
 
             teacherDto.getSubjectList().forEach(subject -> {
