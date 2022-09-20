@@ -26,5 +26,7 @@ public class Transaction extends BaseClass{
     @JoinColumn(name = "userId" , referencedColumnName = "id")
     private User user;
 
+
+
 }
 

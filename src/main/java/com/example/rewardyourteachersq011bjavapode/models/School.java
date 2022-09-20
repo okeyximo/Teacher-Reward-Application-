@@ -19,9 +19,7 @@ public class School extends BaseClass{
     private String name;
     private String address;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "school")
-//    private List<User> users = new ArrayList<>();
+
 
 }
 
