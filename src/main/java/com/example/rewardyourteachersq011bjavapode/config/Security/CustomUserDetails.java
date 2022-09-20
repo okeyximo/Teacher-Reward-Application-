@@ -1,7 +1,9 @@
 package com.example.rewardyourteachersq011bjavapode.config.Security;
 
 import com.example.rewardyourteachersq011bjavapode.models.User;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@Setter
 @NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
@@ -17,6 +21,7 @@ public class CustomUserDetails implements UserDetails {
     private String password;
 
     private List<GrantedAuthority> authorities;
+
 
     public CustomUserDetails(User user) {
         this.email = user.getEmail();
@@ -62,4 +67,5 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
