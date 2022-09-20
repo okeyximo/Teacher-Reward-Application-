@@ -52,6 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserRegistrationResponse registerUser(UserDto userDto) {
+
         String email = userDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
         if(existingUser.isEmpty()){

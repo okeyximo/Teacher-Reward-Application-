@@ -44,9 +44,10 @@ public class User  extends BaseClass implements Serializable{
     @OneToMany(mappedBy = "user")
     private List<Notification> notificationList = new ArrayList<>();
 
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
+    @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Wallet wallet;
+
     private String school;
 
     public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school) {

@@ -1,13 +1,17 @@
 package com.example.rewardyourteachersq011bjavapode.utils;
 
 
+import com.example.rewardyourteachersq011bjavapode.dto.SchoolDTO;
+import com.example.rewardyourteachersq011bjavapode.models.School;
 import lombok.Data;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -21,15 +25,17 @@ public class ListOfSchoolUtil {
     }
 
 
-    public static Map<String , String> readAllSchoolsFromCsvFile(String path){
-        Map<String, String> schools = new HashMap<>();
+    public static List<SchoolDTO> readAllSchoolsFromCsvFile(String path){
+        List<SchoolDTO> schools = new ArrayList<>();
         try {
             reader = new BufferedReader(new FileReader(path));
             String[] data = new String[0];
+
             while((line = reader.readLine()) != null){
                 while((line = reader.readLine()) != null){
                     data = line.split(",");
-                    schools.put(data[0] , data[1]);
+                    SchoolDTO schoolDTO =  new SchoolDTO(data[0] , data[1] , data[2] , data[3]);
+                    schools.add(schoolDTO);
                 }
             }
         } catch (IOException e) {

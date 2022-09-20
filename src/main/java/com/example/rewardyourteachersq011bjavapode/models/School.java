@@ -16,8 +16,11 @@ import java.util.List;
 @Entity
 @Table(name = "schools")
 public class School extends BaseClass{
+
     private String name;
     private String address;
+    private String stateAndCountry;
+    private String schoolType;
 
 //    @JsonManagedReference
 //    @OneToMany(mappedBy = "school")
