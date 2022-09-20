@@ -33,12 +33,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**")
+                .antMatchers("/api/auth/**", "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().logout().deleteCookies("JSESSIONID")
+                .and().logout().invalidateHttpSession(true);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -53,3 +55,4 @@ public class SecurityConfig {
         auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 }
+

@@ -1,11 +1,16 @@
 package com.example.rewardyourteachersq011bjavapode.config.Security;
 
+import com.example.rewardyourteachersq011bjavapode.cache.LoggedOutJwtTokenCache;
+import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
+import com.example.rewardyourteachersq011bjavapode.exceptions.InvalidTokenRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +24,12 @@ public class JwtUtil {
 
     @Value("${jwt.signing.key.secret:decagonsquad11bpode}")
     private  String secret ;
+   @Autowired
+   @Lazy
+    private LoggedOutJwtTokenCache tokenBlackListCache;
 
   //  @Value("${jwt.token.expiration.in.seconds}")
+    // todo : reduce the expirationTime to the barest minimum say 5 mins.
     private final  int expirationTime = 1000 * 60 * 60 * 10;
 
     public String extractUsername(String token) {
@@ -56,7 +65,19 @@ public class JwtUtil {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
+        // todo : check if token is blacklisted -> if no process. else return false
+        validateTokenIsNotForALoggedOutDevice(token);
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    private void validateTokenIsNotForALoggedOutDevice(String authToken) {
+        OnUserLogoutSuccessEvent previouslyLoggedOutEvent = tokenBlackListCache.getLogoutEventForToken(authToken);
+        if (previouslyLoggedOutEvent != null) {
+            String userEmail = previouslyLoggedOutEvent.getUserEmail();
+            Date logoutEventDate = previouslyLoggedOutEvent.getEventTime();
+            String errorMessage = String.format("Token corresponds to an already logged out user [%s] at [%s]. Please login again", userEmail, logoutEventDate);
+            throw new InvalidTokenRequestException("JWT", authToken, errorMessage);
+        }
     }
 }

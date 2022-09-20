@@ -2,8 +2,14 @@ package com.example.rewardyourteachersq011bjavapode.utils;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.models.User;
+import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +24,7 @@ import java.util.Map;
 public class UserUtil {
     private final Cloudinary cloudinary;
 
+    private final UserRepository userRepository;
     private static File convertMultipartToFile(MultipartFile image) throws IOException {
         File convertedFile;
         String file = image.getOriginalFilename();
@@ -43,6 +50,17 @@ public class UserUtil {
         } catch (IOException e) {
             throw new IOException(e);
         }
+    }
+
+    public User getUserByEmail(String email){
+        return  userRepository.findUserByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException("User with " + email + " not found"));
+    }
+
+    public String getAuthenticatedUserEmail() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return userDetails.getUsername();
     }
 
 }

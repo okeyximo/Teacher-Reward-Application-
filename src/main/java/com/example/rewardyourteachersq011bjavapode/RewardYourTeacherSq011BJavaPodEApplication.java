@@ -1,13 +1,10 @@
 package com.example.rewardyourteachersq011bjavapode;
-
-import com.cloudinary.utils.ObjectUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.cloudinary.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 @SpringBootApplication
 public class RewardYourTeacherSq011BJavaPodEApplication {

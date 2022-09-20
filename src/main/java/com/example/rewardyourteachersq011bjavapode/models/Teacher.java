@@ -33,8 +33,7 @@ public class Teacher extends User{
 
     private  String teacherIdUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @Column(nullable = false)
+    @OneToMany(mappedBy = "teacher")
     private List<Subject> subject;
 
 
