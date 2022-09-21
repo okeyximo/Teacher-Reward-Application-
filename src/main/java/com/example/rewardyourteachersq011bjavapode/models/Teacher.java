@@ -3,10 +3,7 @@ package com.example.rewardyourteachersq011bjavapode.models;
 
 import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import com.example.rewardyourteachersq011bjavapode.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
