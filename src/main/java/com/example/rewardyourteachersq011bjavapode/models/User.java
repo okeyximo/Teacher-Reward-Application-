@@ -20,6 +20,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type")
+@AllArgsConstructor
 @Table(name = "users")
 public class User  extends BaseClass implements Serializable{
     private String name;

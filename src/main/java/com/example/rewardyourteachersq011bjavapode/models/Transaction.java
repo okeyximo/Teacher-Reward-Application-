@@ -25,10 +25,6 @@ public class Transaction extends BaseClass{
     private User user;
 
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "wallet_id" , referencedColumnName = "id")
-    private Wallet wallet;
 
 
 }

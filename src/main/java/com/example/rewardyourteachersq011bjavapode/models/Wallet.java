@@ -24,9 +24,6 @@ public class Wallet extends BaseClass{
     @JoinColumn(name = "userId", referencedColumnName = "id" )
     private User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "wallet")
-    private List<Transaction> transactionList = new ArrayList<>();
 
 
 }
