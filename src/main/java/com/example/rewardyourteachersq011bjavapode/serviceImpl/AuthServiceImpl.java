@@ -89,10 +89,6 @@ public class AuthServiceImpl implements AuthService {
             teacher.setRole(TEACHER);
             teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
-//            Wallet wallet = new Wallet(new BigDecimal(0),teacher);
-//            walletRepository.save(wallet);
-
-
             teacherDto.getSubjectList().forEach(subject -> {
                 subjectRepository.save(new Subject(subject , teacher));
             });
