@@ -42,9 +42,9 @@ class UserRepositoryTest {
 
         userRepository.saveAllAndFlush(
                 List.of(
-                        new User(1L , localDateTime , localDateTime , "vincent" , Role.STUDENT , "enwerevincent@gmail.com", "12345" , transactionList, messageList, notificationList , "fgc nise"),
-                        new User(2L , localDateTime , localDateTime , "chioma" , Role.STUDENT , "chioma@gmail.com", "12345" , transactionList, messageList, notificationList , "fggc onitsha"),
-                        new User(3L , localDateTime , localDateTime , "cisca" , Role.STUDENT , "cisca@gmail.com", "12345" , transactionList, messageList, notificationList , "fgc nise")
+                        new User(1L , localDateTime , localDateTime , "vincent" , Role.STUDENT , "enwerevincent@gmail.com", "12345" ,"","", transactionList, messageList, notificationList , "fgc nise"),
+                        new User(2L , localDateTime , localDateTime , "chioma" , Role.STUDENT , "chioma@gmail.com", "12345" , "","",transactionList, messageList, notificationList , "fggc onitsha"),
+                        new User(3L , localDateTime , localDateTime , "cisca" , Role.STUDENT , "cisca@gmail.com", "12345" ,"","", transactionList, messageList, notificationList , "fgc nise")
                 )
         );
     }

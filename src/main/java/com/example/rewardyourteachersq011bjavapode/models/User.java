@@ -2,6 +2,7 @@ package com.example.rewardyourteachersq011bjavapode.models;
 
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -32,15 +34,18 @@ public class User  extends BaseClass implements Serializable{
 
     private String password;
 
-    @JsonManagedReference
+    private String about;
+    private String telephone;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactionList = new ArrayList<>();
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Message> messageList = new ArrayList<>();
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Notification> notificationList = new ArrayList<>();
 
@@ -49,7 +54,7 @@ public class User  extends BaseClass implements Serializable{
 //    @JoinColumn(name = "schoolId" , referencedColumnName = "id")
     private String school;
 
-    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school) {
+    public User(Long id, LocalDateTime createDate, LocalDateTime updateDate, String name, Role role, String email, String password,String about,String telephone, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school) {
         super(id, createDate, updateDate);
         this.name = name;
         this.role = role;
@@ -59,6 +64,8 @@ public class User  extends BaseClass implements Serializable{
         this.messageList = messageList;
         this.notificationList = notificationList;
         this.school = school;
+        this.telephone =telephone;
+        this.about = about;
     }
 }
 
