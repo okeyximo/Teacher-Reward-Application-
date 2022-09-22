@@ -13,8 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -36,16 +34,12 @@ public class User  extends BaseClass implements Serializable{
 
     private String about;
     private String telephone;
-
-
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactionList = new ArrayList<>();
-
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Message> messageList = new ArrayList<>();
-
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Notification> notificationList = new ArrayList<>();
