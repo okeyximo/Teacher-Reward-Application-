@@ -23,8 +23,5 @@ public class UserController {
     public ResponseEntity<?> logoutUser(@CurrentUser CustomUserDetails currentUser, @RequestHeader("Authorization") String bearToken) {
         return new ResponseEntity<>(userService.logoutUser(currentUser, bearToken), OK);
     }
-    @PutMapping("/fund-wallet")
-    public ResponseEntity<?> fundWallet(@CurrentUser CustomUserDetails customUserDetails, @RequestBody FundWalletDto fundWalletDto){
-        return new ResponseEntity<>(userService.fundWallet(customUserDetails, fundWalletDto.amount()), OK);
-    }
+
 }

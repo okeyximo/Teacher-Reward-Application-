@@ -33,6 +33,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final ResponseService<ApiResponse<PrincipalDto>> responseService;
+    private final PayStackServiceImpl payStackService;
 
     @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginDTO authRequest) throws ResourceNotFoundException {
@@ -50,5 +51,11 @@ public class AuthController {
         log.info("Successfully Registered {} ", teacherDto.getEmail());
         return new ResponseEntity<>(authService.registerTeacher(teacherDto, teacherIdImage), CREATED);
     }
+
+//    @PostMapping(value = "/home")
+//    public ResponseEntity<?> payStack(){
+//        System.out.println("got here");
+//        return new ResponseEntity<>(payStackService.pay(), OK);
+//    }
 
 }
