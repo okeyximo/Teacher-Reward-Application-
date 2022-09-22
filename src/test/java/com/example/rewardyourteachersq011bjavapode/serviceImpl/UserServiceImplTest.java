@@ -127,12 +127,6 @@ class UserServiceImplTest {
         assertEquals("success", actual.getMessage());
     }
 
-    @Test
-    void currentUserWalletBalance() {
-        when(userUtil.getAuthenticatedUserEmail()).thenReturn(user.getEmail());
-        when(walletRepository.findWalletByUserEmail(user.getEmail())).thenReturn(Optional.of(wallet));
-        var actual = userService.currentBalance();
-        assertEquals(new BigDecimal(100), actual);
-    }
+
 
 }
