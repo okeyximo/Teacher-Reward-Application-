@@ -17,7 +17,7 @@ import java.util.Map;
 @Data
 public class ListOfSchoolUtil {
 
-    private static BufferedReader reader;
+   // private static BufferedReader reader;
     private static String line;
 
     public ListOfSchoolUtil() {
@@ -25,14 +25,13 @@ public class ListOfSchoolUtil {
     }
 
 
-    public static List<SchoolDTO> readAllSchoolsFromCsvFile(String path){
+    public static List<SchoolDTO> readAllSchoolsFromCsvFile(BufferedReader bufferedReader){
         List<SchoolDTO> schools = new ArrayList<>();
         try {
-            reader = new BufferedReader(new FileReader(path));
+          //  reader = new BufferedReader(new FileReader(path));
             String[] data = new String[0];
-
-            while((line = reader.readLine()) != null){
-                while((line = reader.readLine()) != null){
+            while((line = bufferedReader.readLine()) != null){
+                while((line = bufferedReader.readLine()) != null){
                     data = line.split(",");
                     SchoolDTO schoolDTO =  new SchoolDTO(data[0] , data[1] , data[2] , data[3]);
                     schools.add(schoolDTO);

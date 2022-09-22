@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
 
@@ -17,7 +15,7 @@ import java.io.IOException;
 public class RewardYourTeacherSq011BJavaPodEApplication implements CommandLineRunner {
 
 
-    private final   SchoolServiceImpl schoolService;
+  //  private final   SchoolServiceImpl schoolService;
 
 
     public static void main(String[] args) throws IOException {
@@ -30,6 +28,6 @@ public class RewardYourTeacherSq011BJavaPodEApplication implements CommandLineRu
 
     @Override
     public void run(String... args) throws Exception {
-        schoolService.addSchool("src/main/resources/List Of Schools In Lagos - updated.csv");
+       // schoolService.addSchool("src/main/resources/List Of Schools In Lagos - updated.csv");
     }
 }
