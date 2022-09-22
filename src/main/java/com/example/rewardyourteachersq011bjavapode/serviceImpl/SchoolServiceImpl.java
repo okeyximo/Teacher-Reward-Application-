@@ -33,7 +33,7 @@ import static com.example.rewardyourteachersq011bjavapode.utils.ListOfSchoolUtil
 @Slf4j
 public class SchoolServiceImpl implements SchoolService {
 
-    Pageable pageWith5records;
+
     private final SchoolRepository schoolRepository;
 
 
@@ -63,7 +63,7 @@ public class SchoolServiceImpl implements SchoolService {
         try {
             bufferedReader = new BufferedReader(new FileReader("src/main/resources/List Of Schools In Lagos - updated.csv"));
             addSchool(bufferedReader);
-            pageWith5records = PageRequest.of(page, size, Sort.by(sortByName).ascending());
+            Pageable pageWith5records = PageRequest.of(page, size, Sort.by(sortByName).ascending());
             Page<School> schoolList = schoolRepository.findAll(pageWith5records);
             return new ApiResponse<>("success" , LocalDateTime.now() , schoolList);
         } catch (FileNotFoundException e) {

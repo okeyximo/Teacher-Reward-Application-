@@ -12,22 +12,10 @@ import java.io.IOException;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class RewardYourTeacherSq011BJavaPodEApplication implements CommandLineRunner {
-
-
-  //  private final   SchoolServiceImpl schoolService;
-
-
+public class RewardYourTeacherSq011BJavaPodEApplication  {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(RewardYourTeacherSq011BJavaPodEApplication.class, args);
 
-
-       // schoolService.addSchool("src/main/resources/List Of Schools In Lagos - updated.csv");
     }
 
-
-    @Override
-    public void run(String... args) throws Exception {
-       // schoolService.addSchool("src/main/resources/List Of Schools In Lagos - updated.csv");
-    }
 }

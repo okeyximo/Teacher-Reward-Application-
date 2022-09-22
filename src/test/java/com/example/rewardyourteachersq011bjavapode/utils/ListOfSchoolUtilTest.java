@@ -17,11 +17,6 @@ import static org.mockito.Mockito.when;
 
 class ListOfSchoolUtilTest {
 
-    @BeforeEach
-    void setUp() {
-       // data = new String[]{};
-    }
-
     @Test
     void readAllSchoolsFromCsvFile() {
         Reader reader = new StringReader("name,address,state,type\nfgc,nise, Anambra,Secondary");
