@@ -16,8 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class InitializeTransactionRequest {
 
-    @Digits(integer = 9, fraction = 0)
-    private String amount;
+    private BigDecimal amount;
     private String email;
 
 }

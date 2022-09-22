@@ -86,18 +86,6 @@ public class TransactionServiceImpl implements PaymentService {
                 throw new Exception("An error occurred while  verifying payment");
             } else if (payStackResponse.getData().getStatus().equals("success")) {
 
-            // todo : Okeys part .
-//                transaction.setAmount(payStackResponse.getData().getAmount().divide(BigDecimal.valueOf(100)));
-//                transaction.setTransactionType(TransactionType.CREDIT);
-//                Optional<Wallet> wallet = walletRepository.findById(user.getWallet().getId());
-//                if (wallet.isPresent()){
-//                    wallet.get().setBalance(wallet.get().getBalance().add(transaction.getAmount()));
-//                    walletRepository.save(wallet.get());
-//                }else
-//                    throw new ResourceNotFound("wallet", "id", wallet.get().getId());
-//                transaction.setUser(user);
-//                transactionRepository.save(transaction);
-//                notificationService.depositNotification(transaction.getId());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

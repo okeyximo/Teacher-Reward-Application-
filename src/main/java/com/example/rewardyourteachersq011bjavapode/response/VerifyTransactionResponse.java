@@ -1,9 +1,17 @@
 package com.example.rewardyourteachersq011bjavapode.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class VerifyTransactionResponse {
 
     private String status;
@@ -11,24 +19,4 @@ public class VerifyTransactionResponse {
     private String message;
 
     private Data data;
-    public VerifyTransactionResponse() {
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public Data getData() {
-        return data;
-    }
-    public void setData(Data data) {
-        this.data = data;
-    }
 }
