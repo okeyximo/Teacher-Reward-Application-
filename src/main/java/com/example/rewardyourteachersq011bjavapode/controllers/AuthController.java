@@ -4,6 +4,7 @@ package com.example.rewardyourteachersq011bjavapode.controllers;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.dto.LoginDTO;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +34,6 @@ public class AuthController {
 
     private final AuthService authService;
     private final ResponseService<ApiResponse<PrincipalDto>> responseService;
-    private final PayStackServiceImpl payStackService;
 
     @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginDTO authRequest) throws ResourceNotFoundException {
@@ -51,11 +51,5 @@ public class AuthController {
         log.info("Successfully Registered {} ", teacherDto.getEmail());
         return new ResponseEntity<>(authService.registerTeacher(teacherDto, teacherIdImage), CREATED);
     }
-
-//    @PostMapping(value = "/home")
-//    public ResponseEntity<?> payStack(){
-//        System.out.println("got here");
-//        return new ResponseEntity<>(payStackService.pay(), OK);
-//    }
 
 }
