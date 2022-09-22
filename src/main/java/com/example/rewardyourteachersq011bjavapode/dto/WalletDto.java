@@ -1,10 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.dto;
 
 import com.example.rewardyourteachersq011bjavapode.models.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.math.BigDecimal;
 
 @AllArgsConstructor

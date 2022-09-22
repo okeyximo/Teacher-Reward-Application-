@@ -46,10 +46,12 @@ class TransactionServiceImplTest {
         var actual = transactionRepository.findAllByUser_Id(1L);
         assertEquals(actual, transactionRepository.findAllByUser_Id(1L));
     }
+
 @Test
     void findAllNoTransactionForAUser(){
     when(transactionRepository.findAllByUser_Id(1L)).thenReturn(transactionList);
     var actual = transactionRepository.findAllByUser_Id(7L);
     assertEquals(actual, transactionRepository.findAllByUser_Id(7L));
+
 }
 }

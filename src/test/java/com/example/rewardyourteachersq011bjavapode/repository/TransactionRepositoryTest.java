@@ -17,33 +17,38 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
  class TransactionRepositoryTest {
 
-    @Autowired   TransactionRepository transactionRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
     private List<Transaction> transactionList;
     private List<Message> messageList;
     private List<Notification> notificationList;
     private LocalDateTime localDateTime;
     private User user;
-    @Autowired   UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
-        user = new User(1L, localDateTime,localDateTime,"Nma", Role.STUDENT,"Nma@gmail.com","1234",transactionList,messageList,notificationList,"VGC");
-        localDateTime = LocalDateTime.of(2022 , Month.FEBRUARY, 12, 12 , 12);
+        user = new User(1L, localDateTime, localDateTime, "Nma", Role.STUDENT, "Nma@gmail.com", "1234", transactionList, messageList, notificationList, "VGC");
+        localDateTime = LocalDateTime.of(2022, Month.FEBRUARY, 12, 12, 12);
         userRepository.save(user);
         transactionRepository.saveAllAndFlush(List.of(
-                new Transaction(1L , TransactionType.DEBIT , "vincent sent me money" ,user),
-                new Transaction(2L , TransactionType.DEBIT , "wallet funded" ,user),
-                new Transaction(3L , TransactionType.DEBIT , "deposit" ,user)
+                new Transaction(1L, TransactionType.DEBIT, "vincent sent me money", user),
+                new Transaction(2L, TransactionType.DEBIT, "wallet funded", user),
+                new Transaction(3L, TransactionType.DEBIT, "deposit", user)
         ));
     }
+
     @Test
-     void  testToAssertThatATransactionIsFound(){
+    void testToAssertThatATransactionIsFound() {
         List<Transaction> transaction = transactionRepository.findAllByUser_Id(1L);
         assertThat(transaction.size()).isEqualTo(3);
     }
+
     @Test
-    void  testToAssertThatATransactionIsNotFound(){
+    void testToAssertThatATransactionIsNotFound() {
         List<Transaction> transaction = transactionRepository.findAllByUser_Id(5L);
         assertThat(transaction.size()).isEqualTo(0);
+
     }
 }
