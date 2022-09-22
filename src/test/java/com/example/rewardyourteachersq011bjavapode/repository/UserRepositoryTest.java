@@ -2,10 +2,8 @@ package com.example.rewardyourteachersq011bjavapode.repository;
 
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
-import com.example.rewardyourteachersq011bjavapode.models.Message;
-import com.example.rewardyourteachersq011bjavapode.models.Notification;
-import com.example.rewardyourteachersq011bjavapode.models.Transaction;
-import com.example.rewardyourteachersq011bjavapode.models.User;
+import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.models.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import javax.persistence.EntityManagerFactory;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -39,6 +38,7 @@ class UserRepositoryTest {
         List<Transaction> transactionList = new ArrayList<>();
         List<Message> messageList = new ArrayList<>();
         List<Notification> notificationList = new ArrayList<>();
+
 
         userRepository.saveAllAndFlush(
                 List.of(
@@ -65,4 +65,24 @@ class UserRepositoryTest {
         }).isInstanceOf(ResourceNotFoundException.class);
 
     }
+
+    @Test
+    void findUserByIdIsNotNullAndIdIsEqualTo1L() {
+        User user = userRepository.findById(1L)
+                .orElseThrow(ResourceNotFoundException::new);
+        assertThat(user).isNotNull();
+        assertThat(user.getId()).isEqualTo(1L);
+    }
+
+
+
+    @Test
+    void findUserByIdThrowsResourceNotFoundException(){
+        assertThatThrownBy(()->{
+            userRepository.findById(5L)
+                    .orElseThrow(ResourceNotFoundException::new);
+        }).isInstanceOf(ResourceNotFoundException.class);
+
+    }
+
 }
