@@ -38,7 +38,7 @@ class TransactionServiceImplTest {
 
     void setUp() {
         localDateTime = LocalDateTime.of(2022, Month.SEPTEMBER,5,3,7);
-        User user = new User(1L,localDateTime,localDateTime,"Nma", Role.STUDENT,"Nma@gmail.com","123",transactionList,messageList,notificationList,"FGGC");
+        User user = new User(1L,localDateTime,localDateTime,"Nma", Role.STUDENT,"Nma@gmail.com","123","about","0907777",transactionList,messageList,notificationList,"FGGC");
     }
     @Test
     void findAllTransactionForAUser(){

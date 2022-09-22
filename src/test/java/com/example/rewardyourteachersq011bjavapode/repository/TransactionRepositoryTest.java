@@ -29,7 +29,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
     @BeforeEach
     void setUp() {
-        user = new User(1L, localDateTime, localDateTime, "Nma", Role.STUDENT, "Nma@gmail.com", "1234", transactionList, messageList, notificationList, "VGC");
+        user = new User(1L,localDateTime, localDateTime, "Nma", Role.STUDENT, "Nma@gmail.com", "1234","about","0906666", transactionList, messageList, notificationList, "VGC");
         localDateTime = LocalDateTime.of(2022, Month.FEBRUARY, 12, 12, 12);
         userRepository.save(user);
         transactionRepository.saveAllAndFlush(List.of(
