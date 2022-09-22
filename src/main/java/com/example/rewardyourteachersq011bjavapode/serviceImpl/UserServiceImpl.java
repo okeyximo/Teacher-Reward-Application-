@@ -51,7 +51,12 @@ public class UserServiceImpl implements UserService {
         return walletBalance;
     }
 
-
+    @Override
+    public BigDecimal currentBalance() {
+       String userEmail = userUtil.getAuthenticatedUserEmail();
+        Wallet wallet = walletRepository.findWalletByUserEmail(userEmail).orElseThrow(()-> new ResourceNotFoundException("Wallet of user not found"));
+        return wallet.getBalance();
+    }
 
 
 
