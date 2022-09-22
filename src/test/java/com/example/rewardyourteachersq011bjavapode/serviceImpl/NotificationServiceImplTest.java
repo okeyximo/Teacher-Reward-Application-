@@ -30,10 +30,6 @@ class NotificationServiceImplTest {
     UserRepository userRepository;
     @InjectMocks
     NotificationServiceImpl notificationService;
-
-
-
-
     private User user;
     private Notification notification;
     List<Transaction> transactionList;
@@ -54,9 +50,5 @@ class NotificationServiceImplTest {
         when(notificationRepository.save(notification)).thenReturn(notification);
         var actual = notificationService.saveNotification(1l,"you have been credited", NotificationType.CREDIT_NOTIFICATION);
         assertNotNull(notificationRepository.save(notification));
-
-
-
-
     }
 }

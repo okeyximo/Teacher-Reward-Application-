@@ -5,12 +5,9 @@ import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import com.example.rewardyourteachersq011bjavapode.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class Teacher extends User{
         super(name, role, email, password, about, telephone, transactionList, messageList, notificationList, school);
         this.teachingPeriod = teachingPeriod;
         this.status = status;
-        Post = post;
+        this.Post = post;
         this.schoolType = schoolType;
         this.teacherIdUrl = teacherIdUrl;
         this.subject = subject;

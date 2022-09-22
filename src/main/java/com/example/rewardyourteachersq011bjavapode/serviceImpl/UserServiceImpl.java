@@ -59,17 +59,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse<UserProfileDto> viewProfile(Long id) {
-       UserProfileDto teacherProfile = new UserProfileDto() ;
-       Teacher teacher = teacherRepository.findById(id).orElseThrow(()-> new UserNotFoundException("user id not found"));
-       teacherProfile.setName(teacher.getName());
-       teacherProfile.setSchool(teacher.getSchool());
-       teacherProfile.setPost(teacher.getPost());
-       teacherProfile.setAbout(teacher.getAbout());
-       teacherProfile.setEmail(teacher.getEmail());
-       teacherProfile.setTelephone(teacher.getTelephone());
-        return new ApiResponse<>("success",LocalDateTime.now(),teacherProfile);
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(()-> new UserNotFoundException("user id not found"));
+        UserProfileDto dto = convertModelToDto(teacher);
+       return new ApiResponse<>("success",LocalDateTime.now(),dto);
+   }
 
-    }
-
+    private UserProfileDto convertModelToDto(Teacher teacher){
+       UserProfileDto dto = new UserProfileDto();
+       dto.setName(teacher.getName());
+       dto.setSchool(teacher.getSchool());
+       dto.setPost(teacher.getPost());
+       dto.setAbout(teacher.getAbout());
+       dto.setEmail(teacher.getEmail());
+       dto.setTelephone(teacher.getTelephone());
+        return  dto;
+   }
 
 }

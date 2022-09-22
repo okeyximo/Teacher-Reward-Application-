@@ -37,6 +37,7 @@ public class User  extends BaseClass implements Serializable{
     private String about;
     private String telephone;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactionList = new ArrayList<>();
