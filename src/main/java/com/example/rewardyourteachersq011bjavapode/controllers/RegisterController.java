@@ -8,15 +8,4 @@ import java.security.Principal;
 @RestController
 public class RegisterController {
 
-    @GetMapping
-    public String googleLogin(){
-        return "Login Successful; and highly You are Welcome!!";
-    }
-
-    @GetMapping("/user")
-    public Principal user (Principal principal){
-        System.out.println("LoginUserName:" + principal.getName());
-        return principal;
-    }
-
 }
