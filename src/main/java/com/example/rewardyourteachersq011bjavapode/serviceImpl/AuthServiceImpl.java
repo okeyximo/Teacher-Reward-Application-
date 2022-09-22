@@ -44,8 +44,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
-    private final WalletRepository walletRepository;
-
+ private final WalletRepository walletRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final UserUtil userUtil;
@@ -57,7 +56,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserRegistrationResponse registerUser(UserDto userDto) {
         String email = userDto.getEmail();
-
         Optional<User> existingUser = userRepository.findUserByEmail(email);
         if(existingUser.isEmpty()){
             User user = new User();
@@ -67,8 +65,6 @@ public class AuthServiceImpl implements AuthService {
             user.setSchool(userDto.getSchool());
             user.setRole(STUDENT);
             userRepository.save(user);
-            Wallet wallet = new Wallet(new BigDecimal(0),user);
-            walletRepository.save(wallet);
             return new UserRegistrationResponse("success", LocalDateTime.now());
         }else {
             throw new UserAlreadyExistException("User already exist");
@@ -81,7 +77,6 @@ public class AuthServiceImpl implements AuthService {
         Optional<User> existingUser = userRepository.findUserByEmail(email);
 
         if(existingUser.isEmpty()){
-            Wallet wallet;
             Teacher teacher = new Teacher();
             teacher.setName(teacherDto.getName());
             teacher.setEmail(teacherDto.getEmail());
@@ -92,8 +87,6 @@ public class AuthServiceImpl implements AuthService {
             teacher.setRole(TEACHER);
             teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
-            wallet = new Wallet(new BigDecimal(0),teacher);
-            walletRepository.save(wallet);
             teacherDto.getSubjectList().forEach(subject -> {
                 subjectRepository.save(new Subject(subject , teacher));
             });
