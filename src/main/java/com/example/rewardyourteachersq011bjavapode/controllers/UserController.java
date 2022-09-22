@@ -27,10 +27,6 @@ public class UserController {
 //        return new ResponseEntity<>(userService.currentBalance(user_id),OK);
 //    }
 
-    @GetMapping("/wallet")
-    public ResponseEntity<?> currentUserBalance(){
-        return new ResponseEntity<>(userService.currentBalance(),OK);
-    }
 
 
 
