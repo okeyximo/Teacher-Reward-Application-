@@ -23,16 +23,11 @@ public class UserController {
     }
 
 
+
     @GetMapping("/wallet")
     public ResponseEntity<?> currentUserBalance(){
         return new ResponseEntity<>(userService.currentBalance(),OK);
     }
-
-
-
-
-
-
 
 
 
