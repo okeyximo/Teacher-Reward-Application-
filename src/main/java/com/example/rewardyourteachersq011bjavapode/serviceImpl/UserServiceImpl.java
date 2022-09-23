@@ -1,10 +1,13 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
+import com.example.rewardyourteachersq011bjavapode.dto.UserEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserProfileDto;
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.exceptions.UserAlreadyExistException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
@@ -14,6 +17,7 @@ import com.example.rewardyourteachersq011bjavapode.repository.TeacherRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
+import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
+import static com.example.rewardyourteachersq011bjavapode.enums.Role.STUDENT;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +39,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TeacherRepository teacherRepository;
-    private final SubjectRepository subjectRepository;
     private final PasswordEncoder passwordEncoder;
     private final WalletRepository walletRepository;
     private final UserUtil userUtil;
@@ -94,6 +100,40 @@ public class UserServiceImpl implements UserService {
     public User findUserById(Long user_id) {
         return userRepository.findById(user_id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
+
+    @Override
+    public ApiResponse<String> editUserProfile(CustomUserDetails currentUser, UserEditProfileDto userEditProfileDto) {
+        User user = userRepository.findUserByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("Details not found"));
+        user.setName(userEditProfileDto.getName());
+        user.setSchool(userEditProfileDto.getSchool());
+        userRepository.save(user);
+        String response = userEditProfileDto.getName() + " Profile updated successfully";
+        return new ApiResponse<>("success", LocalDateTime.now(), response);
+    }
+
+    @Override
+    public UserRegistrationResponse registerUser(UserDto userDto) {
+        String email = userDto.getEmail();
+        Optional<User> existingUser = userRepository.findUserByEmail(email);
+        if (existingUser.isEmpty()) {
+            User user = new User();
+            user.setName(userDto.getName());
+            user.setEmail(userDto.getEmail());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user.setSchool(userDto.getSchool());
+            user.setRole(STUDENT);
+            userRepository.save(user);
+            Wallet userWallet = new Wallet(new BigDecimal("0"), user);
+            walletRepository.save(userWallet);
+            Wallet wallet = new Wallet(new BigDecimal(0), user);
+            walletRepository.save(wallet);
+            return new UserRegistrationResponse("success", LocalDateTime.now());
+        } else {
+            throw new UserAlreadyExistException("User already exist");
+        }
+
+    }
+
 
 
 }

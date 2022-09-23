@@ -34,16 +34,5 @@ public class AuthController {
         return responseService.response(authService.loginUser(authRequest), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register-student")
-    public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserDto userDto) {
-        log.info("Successfully Registered {} ", userDto.getEmail());
-        return new ResponseEntity<>(authService.registerUser(userDto), CREATED);
-    }
-
-    @PostMapping(value = "/register-teacher")
-    public ResponseEntity<UserRegistrationResponse> registerTeacher(TeacherRegistrationDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
-        log.info("Successfully Registered {} ", teacherDto.getEmail());
-        return new ResponseEntity<>(authService.registerTeacher(teacherDto, teacherIdImage), CREATED);
-    }
 
 }

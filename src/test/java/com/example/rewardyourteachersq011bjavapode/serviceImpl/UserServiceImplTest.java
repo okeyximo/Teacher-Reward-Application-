@@ -13,6 +13,7 @@ import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+import com.example.rewardyourteachersq011bjavapode.service.ITeacherService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,9 @@ class UserServiceImplTest {
 
     @InjectMocks
     UserServiceImpl userService;
+
+    @InjectMocks
+    ITeacherService teacherService;
 
     @Mock
     TeacherRepository teacherRepository;
@@ -113,7 +117,7 @@ class UserServiceImplTest {
     void registerUser() {
         UserDto userDto = new UserDto("chioma", "chioma@gmail.com", passwordEncoder.encode("1234"), "school");
         when(userRepository.findUserByEmail(userDto.getEmail())).thenReturn(Optional.empty());
-        var actual = authService.registerUser(userDto);
+        var actual = userService.registerUser(userDto);
         assertEquals("success", actual.getMessage());
 
     }
@@ -122,7 +126,7 @@ class UserServiceImplTest {
     void registerAlreadyExistingUser() {
         UserDto userDto = new UserDto("chioma", "chioma@gmail.com", passwordEncoder.encode("1234"), "school");
         when(userRepository.findUserByEmail(userDto.getEmail())).thenReturn(Optional.of(user));
-        assertThrows(UserAlreadyExistException.class, () -> authService.registerUser(userDto));
+        assertThrows(UserAlreadyExistException.class, () -> userService.registerUser(userDto));
 
     }
     @Test
@@ -131,7 +135,7 @@ class UserServiceImplTest {
         TeacherRegistrationDto teacherDto = new TeacherRegistrationDto("2012-2016", listSubject, SchoolType.SECONDARY);
         when(userRepository.findUserByEmail(teacherDto.getEmail())).thenReturn(Optional.empty());
         when(userUtil.uploadImage(multipartFile)).thenReturn("uploaded");
-        var actual = authService.registerTeacher(teacherDto, multipartFile);
+        var actual = teacherService.registerTeacher(teacherDto, multipartFile);
         assertEquals("success", actual.getMessage());
     }
     @Test
