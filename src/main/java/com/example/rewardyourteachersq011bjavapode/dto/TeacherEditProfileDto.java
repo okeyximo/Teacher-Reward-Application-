@@ -11,6 +11,5 @@ import lombok.*;
 public class TeacherEditProfileDto extends UserEditProfileDto{
 
     private String teachingPeriod;
-   // private List<String> subjectList;
     private SchoolType schoolType;
 }

@@ -28,6 +28,8 @@ public class UserController {
         return new ResponseEntity<>(userService.logoutUser(currentUser, bearToken), OK);
     }
 
+
+
     @GetMapping("/wallet")
     public ResponseEntity<?> currentUserBalance(){
         return new ResponseEntity<>(userService.currentBalance(),OK);
@@ -44,4 +46,5 @@ public class UserController {
         log.info("Successfully Registered {} ", userDto.getEmail());
         return new ResponseEntity<>(userService.registerUser(userDto), CREATED);
     }
+
 }

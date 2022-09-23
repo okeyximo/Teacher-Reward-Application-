@@ -16,7 +16,6 @@ public interface UserService {
 
     ApiResponse<String> logoutUser(CustomUserDetails currentUser, String bearerToken);
 
-    BigDecimal currentBalance(Long user_id);
 
     BigDecimal currentBalance();
 

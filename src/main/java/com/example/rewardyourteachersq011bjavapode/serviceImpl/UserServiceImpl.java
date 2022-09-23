@@ -75,16 +75,8 @@ public class UserServiceImpl implements UserService {
        return new ApiResponse<>("success",LocalDateTime.now(),dto);
    }
 
-    @Override
-    public BigDecimal currentBalance(Long user_id) {
-        BigDecimal walletBalance = null;
-        User user = findUserById(user_id);
-        if (user.getId() != null){
-            Wallet userWallet =  walletRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("Wallet Not Found"));
-            walletBalance =  userWallet.getBalance();
-        }
-        return walletBalance;
-    }
+
+
 
     @Override
     public BigDecimal currentBalance() {
