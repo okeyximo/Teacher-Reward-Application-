@@ -24,4 +24,16 @@ public class UserController {
         return new ResponseEntity<>(userService.logoutUser(currentUser, bearToken), OK);
     }
 
+//    @GetMapping("/wallet/{user_id}")
+//    public ResponseEntity<?> currentUserBalance(@PathVariable(value ="user_id") Long user_id){
+//        return new ResponseEntity<>(userService.currentBalance(user_id),OK);
+//    }
+
+
+    @GetMapping("/wallet")
+    public ResponseEntity<?> currentUserBalance(){
+        return new ResponseEntity<>(userService.currentBalance(),OK);
+    }
+
+
 }

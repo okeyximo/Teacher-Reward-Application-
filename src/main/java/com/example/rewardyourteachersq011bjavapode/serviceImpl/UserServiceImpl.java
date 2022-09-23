@@ -5,9 +5,16 @@ import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.WalletNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.dto.UserProfileDto;
+import com.example.rewardyourteachersq011bjavapode.enums.Role;
+import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
+import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.models.Wallet;
 import com.example.rewardyourteachersq011bjavapode.repository.SubjectRepository;
+import com.example.rewardyourteachersq011bjavapode.repository.TeacherRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
@@ -23,20 +30,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import java.util.Optional;
 
 import static com.example.rewardyourteachersq011bjavapode.enums.NotificationType.CREDIT_NOTIFICATION;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
     private final PasswordEncoder passwordEncoder;
+    private final WalletRepository walletRepository;
     private final UserUtil userUtil;
     private final NotificationService notificationService;
-    private final WalletRepository walletRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
 
 
@@ -49,24 +60,70 @@ public class UserServiceImpl implements UserService {
         return new ApiResponse<>("success", LocalDateTime.now(), response);
     }
 
-    @Override
-    @Transactional
     public ApiResponse<String> fundWallet(CustomUserDetails currentUserDetails, BigDecimal amount) {
-        User currentUser = userRepository.findUserByEmail(currentUserDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("User not found"));
-        Optional<Wallet> optionalWallet = walletRepository.findWalletByUser(currentUser);
-        Wallet wallet;
-        if (optionalWallet.isEmpty()) {
-            wallet = new Wallet(amount, currentUser);
-        } else {
-            wallet = optionalWallet.get();
-            wallet.setBalance(wallet.getBalance().add(amount));
-        }
+        Wallet wallet = walletRepository.findWalletByUserEmail(currentUserDetails.getUsername()).orElseThrow(()-> new WalletNotFoundException("Wallet not found"));
+        wallet.setBalance(wallet.getBalance().add(amount));
         walletRepository.save(wallet);
         String response = "Credit!, Amt: %s; Wallet Balance: %s".formatted(amount.toString(), wallet.getBalance().toString());
-         log.info("%s successfully deposited %s to his wallet".formatted(currentUser.getName(), amount));
-        notificationService.saveNotification(currentUser.getId(), response, CREDIT_NOTIFICATION);
+        log.info("%s successfully deposited %s to his wallet".formatted(currentUserDetails.getUsername(), amount));
+        notificationService.saveNotification(currentUserDetails.getId(), response, CREDIT_NOTIFICATION);
         return new ApiResponse<>("success", LocalDateTime.now(), response);
     }
 
+
+    @Override
+    public ApiResponse<List<User>> searchTeacher(String name) {
+        List<User> teacher = userRepository.findByRoleAndNameContainingIgnoreCase(Role.TEACHER, name);
+        log.info("{}", teacher);
+        return new ApiResponse<>("success", LocalDateTime.now(), teacher);
+    }
+
+
+    public User findById(Long id) {
+        User teacher = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("user not found"));
+        return teacher;
+    }
+
+    @Override
+    public ApiResponse<UserProfileDto> viewProfile(Long id) {
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new UserNotFoundException("user id not found"));
+        UserProfileDto dto = convertModelToDto(teacher);
+        return new ApiResponse<>("success", LocalDateTime.now(), dto);
+    }
+
+    @Override
+    public BigDecimal currentBalance(Long user_id) {
+        BigDecimal walletBalance = null;
+        User user = findUserById(user_id);
+        if (user.getId() != null) {
+            Wallet userWallet = walletRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("Wallet Not Found"));
+            walletBalance = userWallet.getBalance();
+        }
+        return walletBalance;
+    }
+
+    @Override
+    public BigDecimal currentBalance() {
+        String userEmail = userUtil.getAuthenticatedUserEmail();
+        Wallet wallet = walletRepository.findWalletByUserEmail(userEmail).orElseThrow(() -> new ResourceNotFoundException("Wallet of user not found"));
+        return wallet.getBalance();
+    }
+
+
+    private UserProfileDto convertModelToDto(Teacher teacher) {
+        UserProfileDto dto = new UserProfileDto();
+        dto.setName(teacher.getName());
+        dto.setSchool(teacher.getSchool());
+        dto.setPost(teacher.getPost());
+        dto.setAbout(teacher.getAbout());
+        dto.setEmail(teacher.getEmail());
+        dto.setTelephone(teacher.getTelephone());
+        return dto;
+    }
+
+    @Override
+    public User findUserById(Long user_id) {
+        return userRepository.findById(user_id).orElseThrow(() -> new UserNotFoundException("User not found"));
+    }
 
 }
