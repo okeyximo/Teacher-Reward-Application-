@@ -1,7 +1,5 @@
 package com.example.rewardyourteachersq011bjavapode.config.Security;
 
-import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetailService;
-import com.example.rewardyourteachersq011bjavapode.config.Security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +47,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     @Bean
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -59,4 +56,6 @@ public class SecurityConfig {
         auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 }
+
+
 
