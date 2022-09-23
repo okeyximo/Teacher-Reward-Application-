@@ -1,9 +1,14 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
 
+import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherDetails;
+import com.example.rewardyourteachersq011bjavapode.dto.TeacherEditProfileDto;
+import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
+import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.service.ITeacherService;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
@@ -13,8 +18,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +31,8 @@ import java.util.List;
 @RestController
 public class TeacherController {
     private final ITeacherService teacherService;
-
+    private final UserService userService;
+     private final ResponseService<ApiResponse<List<User>>> responseService;
 
     @GetMapping("getAllWithPagination")
     public Page<TeacherDetails> getAllTeachersWithPagination(@RequestParam int pageNo,
@@ -31,12 +41,6 @@ public class TeacherController {
         return teacherService.getAllTeachersWithPagination(pageNo, pageSize);
     }
 
-
-
-
-
-    private final UserService userService;
-    private final ResponseService<ApiResponse<List<User>>> responseService;
 
     @GetMapping("/search/{name}")
     public ResponseEntity<ApiResponse<List<User>>> searchTeacher(@PathVariable(value = "name")String name ){
@@ -47,4 +51,15 @@ public class TeacherController {
         return new ResponseEntity<>(userService.viewProfile(id), HttpStatus.OK);
     }
 
+    @PutMapping(value="/edit-teacherProfile")
+    public ResponseEntity<ApiResponse<String>> editTeachProfile(@CurrentUser CustomUserDetails currentUser, @RequestBody TeacherEditProfileDto userDto) {
+        log.info("successfully updated");
+        return new ResponseEntity<>(teacherService.editTeacherProfile(currentUser, userDto), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/register-teacher")
+    public ResponseEntity<UserRegistrationResponse> registerTeacher(TeacherRegistrationDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
+        log.info("Successfully Registered {} ", teacherDto.getEmail());
+        return new ResponseEntity<>(teacherService.registerTeacher(teacherDto, teacherIdImage), CREATED);
+    }
 }
