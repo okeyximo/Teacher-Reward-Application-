@@ -12,8 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface AuthService {
-    UserRegistrationResponse registerUser(UserDto userDto);
-    UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException;
 
     ApiResponse<PrincipalDto> loginUser(LoginDTO loginDTO);
 }
