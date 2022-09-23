@@ -12,14 +12,8 @@ import static org.springframework.http.HttpStatus.OK;
 public class PaymentController {
 
 
-
-
-
     @PutMapping("/confirm-payment")
-    public ResponseEntity<?> confirmPaymentAndFundWallet(@CurrentUser CustomUserDetails customUserDetails, @RequestBody FundWalletDto fundWalletDto){
-
-
-
+    public ResponseEntity<?> confirmPaymentAndFundWallet(@CurrentUser CustomUserDetails customUserDetails, @RequestBody FundWalletDto fundWalletDto) {
 
 
         return new ResponseEntity<>(userService.fundWallet(customUserDetails, fundWalletDto.amount()), OK);
