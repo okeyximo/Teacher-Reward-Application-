@@ -22,4 +22,13 @@ public class UserController {
         return new ResponseEntity<>(userService.logoutUser(currentUser, bearToken), OK);
     }
 
+
+
+    @GetMapping("/wallet")
+    public ResponseEntity<?> currentUserBalance(){
+        return new ResponseEntity<>(userService.currentBalance(),OK);
+    }
+
+
+
 }

@@ -1,10 +1,8 @@
 package com.example.rewardyourteachersq011bjavapode.models;
 import com.example.rewardyourteachersq011bjavapode.enums.TransactionType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 
 
@@ -25,6 +23,9 @@ public class Transaction extends BaseClass{
     @ManyToOne
     @JoinColumn(name = "userId" , referencedColumnName = "id")
     private User user;
+
+
+
 
 }
 

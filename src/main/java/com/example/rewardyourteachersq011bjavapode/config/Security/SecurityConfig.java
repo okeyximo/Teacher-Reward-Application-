@@ -1,7 +1,5 @@
 package com.example.rewardyourteachersq011bjavapode.config.Security;
 
-import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetailService;
-import com.example.rewardyourteachersq011bjavapode.config.Security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +40,7 @@ public class SecurityConfig {
                 .antMatchers("/api/auth/**", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs")
                 .permitAll()
                 .anyRequest().authenticated()
+                .and().oauth2Login()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -50,7 +49,6 @@ public class SecurityConfig {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
@@ -63,4 +61,6 @@ public class SecurityConfig {
 
 
 }
+
+
 

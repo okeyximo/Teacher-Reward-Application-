@@ -22,9 +22,7 @@ public class School extends BaseClass{
     private String stateAndCountry;
     private String schoolType;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "school")
-//    private List<User> users = new ArrayList<>();
+
 
 }
 
