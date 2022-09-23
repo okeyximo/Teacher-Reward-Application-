@@ -1,6 +1,5 @@
 package com.example.rewardyourteachersq011bjavapode.response;
 
-import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -18,5 +18,8 @@ import java.util.List;
 public class School extends BaseClass{
     private String name;
     private String address;
+
+
+
 }
 
