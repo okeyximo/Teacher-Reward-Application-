@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -55,6 +58,7 @@ public class SecurityConfig {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
+
 }
 
 
