@@ -4,15 +4,10 @@ package com.example.rewardyourteachersq011bjavapode.models;
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import com.example.rewardyourteachersq011bjavapode.enums.Status;
-<<<<<<< HEAD
-import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
-=======
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
->>>>>>> a457f6c1dbd846b547d1e5b903415f6294d2921c
 
 import javax.persistence.*;
 import java.util.List;
