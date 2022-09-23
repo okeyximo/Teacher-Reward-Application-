@@ -52,59 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    @Override
-    public UserRegistrationResponse registerUser(UserDto userDto) {
-        String email = userDto.getEmail();
-        Optional<User> existingUser = userRepository.findUserByEmail(email);
-        if (existingUser.isEmpty()) {
-            User user = new User();
-            user.setName(userDto.getName());
-            user.setEmail(userDto.getEmail());
-            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            user.setSchool(userDto.getSchool());
-            user.setRole(STUDENT);
-            userRepository.save(user);
-            Wallet userWallet = new Wallet(new BigDecimal("0"), user);
-            walletRepository.save(userWallet);
-            Wallet wallet = new Wallet(new BigDecimal(0), user);
-            walletRepository.save(wallet);
-            return new UserRegistrationResponse("success", LocalDateTime.now());
-        } else {
-            throw new UserAlreadyExistException("User already exist");
-        }
 
-    }
-
-    @Override
-    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException {
-        String email = teacherDto.getEmail();
-        Optional<User> existingUser = userRepository.findUserByEmail(email);
-
-        if (existingUser.isEmpty()) {
-            Teacher teacher = new Teacher();
-            teacher.setName(teacherDto.getName());
-            teacher.setEmail(teacherDto.getEmail());
-            teacher.setPassword(passwordEncoder.encode(teacherDto.getPassword()));
-            teacher.setSchool(teacherDto.getSchool());
-            teacher.setTeachingPeriod(teacherDto.getTeachingPeriod());
-            teacher.setSchoolType(teacherDto.getSchoolType());
-            teacher.setRole(TEACHER);
-            teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
-            userRepository.save(teacher);
-            Wallet userWallet = new Wallet(new BigDecimal("0"), teacher);
-            walletRepository.save(userWallet);
-
-
-            teacherDto.getSubjectList().forEach(subject -> {
-                subjectRepository.save(new Subject(subject, teacher));
-            });
-
-            return new UserRegistrationResponse("success", LocalDateTime.now());
-        } else {
-            throw new UserAlreadyExistException("User already exist");
-        }
-
-    }
 
     @Override
     public ApiResponse<PrincipalDto> loginUser(LoginDTO loginDTO) {
