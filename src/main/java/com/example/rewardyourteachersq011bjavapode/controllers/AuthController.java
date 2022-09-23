@@ -29,6 +29,7 @@ public class AuthController {
     private final AuthService authService;
     private final ResponseService<ApiResponse<PrincipalDto>> responseService;
 
+
     @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginDTO authRequest) throws ResourceNotFoundException {
         return responseService.response(authService.loginUser(authRequest), HttpStatus.OK);
