@@ -12,12 +12,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 
+
 public interface UserService {
 
     ApiResponse<String> logoutUser(CustomUserDetails currentUser, String bearerToken);
 
 
     BigDecimal currentBalance();
+
 
     ApiResponse<List<User>> searchTeacher(String name);
 

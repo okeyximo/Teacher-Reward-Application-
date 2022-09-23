@@ -1,6 +1,8 @@
 package com.example.rewardyourteachersq011bjavapode.response;
 
 import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -42,5 +44,6 @@ public  class Data {
 
     private String paid_at;
 
+    @JsonIgnore
     private Authorization authorization;
 }
