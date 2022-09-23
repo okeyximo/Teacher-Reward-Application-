@@ -28,4 +28,15 @@ public class ExceptionController {
         return responseService.response(new ExceptionResponse(exception.getMessage(), LocalDateTime.now() , HttpStatus.NOT_ACCEPTABLE), HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<ExceptionResponse> userAlreadyExistHandler(UserAlreadyExistException existException){
+        return responseService.response(new ExceptionResponse(existException.getMessage(),LocalDateTime.now(),HttpStatus.CONFLICT),HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> userNotFoundHandler(UserNotFoundException exception){
+        return responseService.response(new ExceptionResponse(exception.getMessage(),LocalDateTime.now(),HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
+    }
+
+
 }

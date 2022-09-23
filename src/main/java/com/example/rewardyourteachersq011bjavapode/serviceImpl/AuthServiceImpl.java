@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
     public UserRegistrationResponse registerUser(UserDto userDto) {
         String email = userDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
-        if(existingUser.isEmpty()){
+        if (existingUser.isEmpty()) {
             User user = new User();
             user.setName(userDto.getName());
             user.setEmail(userDto.getEmail());
@@ -66,18 +66,21 @@ public class AuthServiceImpl implements AuthService {
             userRepository.save(user);
             Wallet userWallet = new Wallet(new BigDecimal("0"), user);
             walletRepository.save(userWallet);
+            Wallet wallet = new Wallet(new BigDecimal(0), user);
+            walletRepository.save(wallet);
             return new UserRegistrationResponse("success", LocalDateTime.now());
-        }else {
+        } else {
             throw new UserAlreadyExistException("User already exist");
         }
 
     }
+
     @Override
     public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException {
         String email = teacherDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
 
-        if(existingUser.isEmpty()){
+        if (existingUser.isEmpty()) {
             Teacher teacher = new Teacher();
             teacher.setName(teacherDto.getName());
             teacher.setEmail(teacherDto.getEmail());
@@ -93,11 +96,11 @@ public class AuthServiceImpl implements AuthService {
 
 
             teacherDto.getSubjectList().forEach(subject -> {
-                subjectRepository.save(new Subject(subject , teacher));
+                subjectRepository.save(new Subject(subject, teacher));
             });
 
             return new UserRegistrationResponse("success", LocalDateTime.now());
-        }else{
+        } else {
             throw new UserAlreadyExistException("User already exist");
         }
 
@@ -116,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
         }
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         User loggedInUser = userUtil.getUserByEmail(loginDTO.getEmail());
-        return new ApiResponse<>("success" , LocalDateTime.now() ,   new PrincipalDto( loggedInUser.getId() , loggedInUser.getName() ,  loggedInUser.getEmail() , jwtUtil.generateToken(loginDTO.getEmail())));
+        return new ApiResponse<>("success", LocalDateTime.now(), new PrincipalDto(loggedInUser.getId(), loggedInUser.getName(), loggedInUser.getEmail(), jwtUtil.generateToken(loginDTO.getEmail())));
 
     }
 

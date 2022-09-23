@@ -16,4 +16,5 @@ public class TeacherRegistrationDto extends UserDto{
     private List<String> subjectList;
     private SchoolType schoolType;
 
+
 }
