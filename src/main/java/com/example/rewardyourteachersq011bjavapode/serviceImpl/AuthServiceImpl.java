@@ -65,6 +65,8 @@ public class AuthServiceImpl implements AuthService {
             user.setSchool(userDto.getSchool());
             user.setRole(STUDENT);
             userRepository.save(user);
+            Wallet wallet = new Wallet(new BigDecimal(0),user);
+            walletRepository.save(wallet);
             return new UserRegistrationResponse("success", LocalDateTime.now());
         }else {
             throw new UserAlreadyExistException("User already exist");
