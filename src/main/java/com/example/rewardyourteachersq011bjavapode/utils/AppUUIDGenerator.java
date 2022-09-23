@@ -13,5 +13,4 @@ public class AppUUIDGenerator {
     private UUID uuid = UUID.randomUUID();
 
     private String uuidAsString = uuid.toString();
-
 }

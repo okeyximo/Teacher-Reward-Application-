@@ -43,7 +43,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final WalletRepository walletRepository;
     private final NotificationService notificationService;
     private final UserUtil userUtil;
-    private Map<String, String> trackReference = new HashMap<>();
+    private final Map<String, String> trackReference;
 
     @Override
     public InitializeTransactionResponse initTransaction(InitializeTransactionRequest request) throws Exception {

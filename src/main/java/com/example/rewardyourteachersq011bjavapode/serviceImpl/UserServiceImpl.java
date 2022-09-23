@@ -1,15 +1,14 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
-<<<<<<< HEAD
+
 import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.WalletNotFoundException;
-=======
+
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserEditProfileDto;
->>>>>>> a46afe275ccb91b1a6e4cb253d08832b42c043ec
 import com.example.rewardyourteachersq011bjavapode.dto.UserProfileDto;
 import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
@@ -24,11 +23,8 @@ import com.example.rewardyourteachersq011bjavapode.repository.TeacherRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-<<<<<<< HEAD
 import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
-=======
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
->>>>>>> a46afe275ccb91b1a6e4cb253d08832b42c043ec
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 
 
 import java.util.List;
@@ -69,8 +65,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     @Override
     public ApiResponse<List<User>> searchTeacher(String name) {
         List<User> teacher = userRepository.findByRoleAndNameContainingIgnoreCase(Role.TEACHER, name);
@@ -91,21 +85,6 @@ public class UserServiceImpl implements UserService {
         return new ApiResponse<>("success", LocalDateTime.now(), dto);
     }
 
-<<<<<<< HEAD
-    @Override
-    public BigDecimal currentBalance(Long user_id) {
-        BigDecimal walletBalance = null;
-        User user = findUserById(user_id);
-        if (user.getId() != null) {
-            Wallet userWallet = walletRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("Wallet Not Found"));
-            walletBalance = userWallet.getBalance();
-        }
-        return walletBalance;
-    }
-=======
-
-
->>>>>>> a46afe275ccb91b1a6e4cb253d08832b42c043ec
 
     @Override
     public BigDecimal currentBalance() {
@@ -131,8 +110,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(user_id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
-<<<<<<< HEAD
-=======
+
     @Override
     public ApiResponse<String> editUserProfile(CustomUserDetails currentUser, UserEditProfileDto userEditProfileDto) {
         User user = userRepository.findUserByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("Details not found"));
@@ -167,6 +145,4 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
->>>>>>> a46afe275ccb91b1a6e4cb253d08832b42c043ec
 }
