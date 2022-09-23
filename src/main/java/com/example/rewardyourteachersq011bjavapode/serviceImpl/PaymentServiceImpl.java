@@ -1,12 +1,21 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
+import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.InitializeTransactionRequest;
+import com.example.rewardyourteachersq011bjavapode.exceptions.WalletNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.models.Transaction;
+import com.example.rewardyourteachersq011bjavapode.models.Wallet;
+import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
+import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.response.InitializeTransactionResponse;
 import com.example.rewardyourteachersq011bjavapode.response.VerifyTransactionResponse;
+import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 import com.example.rewardyourteachersq011bjavapode.service.PaymentService;
+import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -19,8 +28,23 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.rewardyourteachersq011bjavapode.enums.NotificationType.CREDIT_NOTIFICATION;
+
 @Service
+@AllArgsConstructor
+@Slf4j
 public class PaymentServiceImpl implements PaymentService {
+
+    private final WalletRepository walletRepository;
+    private final NotificationService notificationService;
+    private final UserUtil userUtil;
+    private Map<String, String> trackReference = new HashMap<>();
+
     @Override
     public InitializeTransactionResponse initTransaction(InitializeTransactionRequest request) throws Exception {
         InitializeTransactionResponse initializeTransactionResponse = null;
@@ -52,7 +76,9 @@ public class PaymentServiceImpl implements PaymentService {
             ex.printStackTrace();
             throw new Exception("Failure initializaing paystack transaction");
         }
-
+        String reference = initializeTransactionResponse.getData().getReference();
+        String email = userUtil.getAuthenticatedUserEmail();
+        trackReference.put(reference, email);
         return initializeTransactionResponse;
     }
 
@@ -81,11 +107,23 @@ public class PaymentServiceImpl implements PaymentService {
             if (payStackResponse == null || payStackResponse.getStatus().equals("false")) {
                 throw new Exception("An error occurred while  verifying payment");
             } else if (payStackResponse.getData().getStatus().equals("success")) {
-
+                BigDecimal amount = payStackResponse.getData().getAmount();
+                String email = trackReference.get(reference);
+                fundWallet(email, amount);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return payStackResponse;
+    }
+
+
+    private void fundWallet(String email, BigDecimal amount) {
+        Wallet wallet = walletRepository.findWalletByUserEmail(email).orElseThrow(() -> new WalletNotFoundException("Wallet not found"));
+        wallet.setBalance(wallet.getBalance().add(amount));
+        walletRepository.save(wallet);
+        String response = "Credit!, Amt: %s; Wallet Balance: %s".formatted(amount.toString(), wallet.getBalance().toString());
+        log.info("User with email %s successfully deposited %s to his wallet".formatted(email, amount));
+        notificationService.saveNotification(email, response, CREDIT_NOTIFICATION);
     }
 }

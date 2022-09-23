@@ -26,14 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import java.util.Optional;
 
-import static com.example.rewardyourteachersq011bjavapode.enums.NotificationType.CREDIT_NOTIFICATION;
 
 import java.util.List;
 
@@ -60,15 +56,7 @@ public class UserServiceImpl implements UserService {
         return new ApiResponse<>("success", LocalDateTime.now(), response);
     }
 
-    public ApiResponse<String> fundWallet(CustomUserDetails currentUserDetails, BigDecimal amount) {
-        Wallet wallet = walletRepository.findWalletByUserEmail(currentUserDetails.getUsername()).orElseThrow(()-> new WalletNotFoundException("Wallet not found"));
-        wallet.setBalance(wallet.getBalance().add(amount));
-        walletRepository.save(wallet);
-        String response = "Credit!, Amt: %s; Wallet Balance: %s".formatted(amount.toString(), wallet.getBalance().toString());
-        log.info("%s successfully deposited %s to his wallet".formatted(currentUserDetails.getUsername(), amount));
-        notificationService.saveNotification(currentUserDetails.getId(), response, CREDIT_NOTIFICATION);
-        return new ApiResponse<>("success", LocalDateTime.now(), response);
-    }
+
 
 
     @Override
