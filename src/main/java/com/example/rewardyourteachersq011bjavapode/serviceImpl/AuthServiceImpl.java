@@ -52,8 +52,6 @@ public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-
-
     @Override
     public ApiResponse<PrincipalDto> loginUser(LoginDTO loginDTO) {
         Authentication authenticate;
