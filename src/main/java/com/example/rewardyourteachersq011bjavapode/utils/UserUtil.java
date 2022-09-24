@@ -63,4 +63,8 @@ public class UserUtil {
         return userDetails.getUsername();
     }
 
+    public User getUser(){
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
 }
