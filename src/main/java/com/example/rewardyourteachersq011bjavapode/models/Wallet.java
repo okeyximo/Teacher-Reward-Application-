@@ -25,5 +25,4 @@ public class Wallet extends BaseClass{
     private User user;
 
 
-
 }

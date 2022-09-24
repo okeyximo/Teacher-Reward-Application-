@@ -1,10 +1,12 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+
 import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import static org.springframework.http.HttpStatus.CREATED;
+
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController

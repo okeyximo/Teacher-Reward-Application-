@@ -28,6 +28,13 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.save(notification);
     }
 
+
+    @Override
+    public Notification saveNotification(String email , String message , NotificationType notificationType) {
+        User user = userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("User not found"));
+        return notificationRepository.save(new Notification(message, notificationType, user));
+    }
+
     public User findUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
 
