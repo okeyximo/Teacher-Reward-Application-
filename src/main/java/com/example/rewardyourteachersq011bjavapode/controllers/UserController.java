@@ -2,12 +2,14 @@ package com.example.rewardyourteachersq011bjavapode.controllers;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
 
+import com.example.rewardyourteachersq011bjavapode.dto.NotificationDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 
 import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
+import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    private final NotificationService notificationService;
 
     @GetMapping("/logout")
     public ResponseEntity<?> logoutUser(@CurrentUser CustomUserDetails currentUser, @RequestHeader("Authorization") String bearToken) {
@@ -49,6 +53,13 @@ public class UserController {
     public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserDto userDto) {
         log.info("Successfully Registered {} ", userDto.getEmail());
         return new ResponseEntity<>(userService.registerUser(userDto), CREATED);
+
+    }
+
+    @GetMapping("/user-notification")
+    public ResponseEntity<?> retrieveUserNotifications (){
+        log.info("user notification retrieve successfully");
+        return new ResponseEntity<>(notificationService.retrieveUserNotifications(), OK);
     }
 
 }
