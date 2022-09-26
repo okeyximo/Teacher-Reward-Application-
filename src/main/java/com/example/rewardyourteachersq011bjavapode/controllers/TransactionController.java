@@ -1,10 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
-import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
-import com.example.rewardyourteachersq011bjavapode.dto.PrincipalDto;
 import com.example.rewardyourteachersq011bjavapode.models.Transaction;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.serviceImpl.TransactionServiceImpl;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
 import lombok.RequiredArgsConstructor;

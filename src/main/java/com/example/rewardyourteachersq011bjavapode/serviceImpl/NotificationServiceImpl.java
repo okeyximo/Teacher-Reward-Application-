@@ -6,6 +6,7 @@ import com.example.rewardyourteachersq011bjavapode.models.Notification;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.repository.NotificationRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
+import com.example.rewardyourteachersq011bjavapode.service.EmailService;
 import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
 
     private final UserRepository userRepository;
+
+    private final EmailService emailService;
 
 
     @Override
@@ -32,6 +35,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notification saveNotification(String email , String message , NotificationType notificationType) {
         User user = userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("User not found"));
+        emailService.sendSimpleEmail(message, notificationType.toString(), email);
         return notificationRepository.save(new Notification(message, notificationType, user));
     }
 
