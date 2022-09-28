@@ -93,8 +93,6 @@ public class TeacherServiceImpl implements ITeacherService {
             userRepository.save(teacher);
             Wallet userWallet = new Wallet(new BigDecimal("0"), teacher);
             walletRepository.save(userWallet);
-
-
             teacherDto.getSubjectList().forEach(subject -> {
                 subjectRepository.save(new Subject(subject, teacher));
             });

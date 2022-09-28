@@ -10,9 +10,12 @@ import com.example.rewardyourteachersq011bjavapode.service.EmailService;
 import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Service @RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
 
@@ -22,7 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public Notification saveNotification(Long userId , String message , NotificationType notificationType) {
+    public Notification saveNotification(Long userId, String message, NotificationType notificationType) {
         Notification notification = new Notification();
         User user = findUserById(userId);
         notification.setNotificationBody(message);
@@ -33,9 +36,14 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public Notification saveNotification(String email , String message , NotificationType notificationType) {
-        User user = userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("User not found"));
-        emailService.sendSimpleEmail(message, notificationType.toString(), email);
+    public Notification saveNotification(String email, String message, NotificationType notificationType) {
+        User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+        boolean success = emailService.sendSimpleEmail(message, notificationType.toString(), email);
+        if (success) {
+            log.info("Email notification sent to %s".formatted(user.getName()));
+        } else {
+            log.error("Email notification not sent");
+        }
         return notificationRepository.save(new Notification(message, notificationType, user));
     }
 

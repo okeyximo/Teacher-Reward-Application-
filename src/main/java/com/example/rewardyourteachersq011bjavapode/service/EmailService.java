@@ -1,8 +1,10 @@
 package com.example.rewardyourteachersq011bjavapode.service;
 
-public interface EmailService {
-     void sendSimpleEmail( String body, String subject, String recieverEmail);
+import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 
-     void sendSimpleEmailWithAttachment(String body, String subject, String attachment);
+public interface EmailService {
+     boolean sendSimpleEmail(String body, String subject, String recieverEmail);
+
+     ApiResponse<String> sendSimpleEmailWithAttachment(String body, String subject, String attachment);
 
 }
