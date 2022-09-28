@@ -18,5 +18,6 @@ public class InitializeTransactionRequest {
 
     private BigDecimal amount;
     private String email;
+    private Long userId;
 
 }
