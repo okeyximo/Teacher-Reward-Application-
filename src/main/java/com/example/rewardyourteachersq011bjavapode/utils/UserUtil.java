@@ -71,5 +71,14 @@ public class UserUtil {
         return userDetails.getUsername();
     }
 
+    public Teacher findTeacherById(Long id){
+        return teacherRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("Teacher Not Found"));
+    }
+
+    public User findUserById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("Teacher Not Found"));
+    }
 
 }
