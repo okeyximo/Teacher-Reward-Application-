@@ -71,11 +71,5 @@ public class UserUtil {
         return userDetails.getUsername();
     }
 
-    public User findUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
-    }
 
-    public Teacher findTeacherById(Long userId) {
-        return teacherRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Teacher with id " + userId + " not found"));
-    }
 }

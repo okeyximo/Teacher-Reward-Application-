@@ -85,7 +85,7 @@ class UserServiceImplTest {
         teacher = new Teacher( "chioma",Role.TEACHER,"chioma@gmail.com","1234", "","",transactionList, messageList, notificationList, "school","20", Status.INSERVICE,"", SchoolType.SECONDARY,"oxy.png",subjectList);
        // message = new Message("success", user);
         when(userRepository.save(user)).thenReturn(user);
-        message = new Message("new message", user , teacher);
+        message = new Message("new message",teacher.getName(), user );
         notification = new Notification("alertz", NotificationType.CREDIT_NOTIFICATION, user);
         subject = new Subject("Economics", teacher);
         wallet = new Wallet(new BigDecimal(100), user);
