@@ -32,15 +32,12 @@ public class MessageServiceImpl implements MessageService {
     public  ApiResponse<Message> sendAppreciationToStudent(Long sender_id, Long user_id, String message) {
         Teacher sender = userUtil.findTeacherById( sender_id );
         User reciever = userUtil.findUserById(user_id);
-        Message messageToBeSent = null;
-        if(sender.getRole() == Role.TEACHER){
-             messageToBeSent = new Message();
+        Message messageToBeSent = new Message();
             messageToBeSent.setMessageBody(message);
             messageToBeSent.setUser(reciever);
             messageToBeSent.setSenderName(sender.getName());
             messageRepository.save(messageToBeSent);
             notificationService.saveNotification(user_id , "You Have A Message From " + sender.getName() ,APPRECIATION_NOTIFICATION);
-        }
         return new ApiResponse<>("success" , LocalDateTime.now() , messageToBeSent);
     }
 
