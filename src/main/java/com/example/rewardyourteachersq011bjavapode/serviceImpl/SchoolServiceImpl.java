@@ -3,6 +3,7 @@ package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 import com.example.rewardyourteachersq011bjavapode.dto.SchoolDTO;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.models.School;
+import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.repository.SchoolRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.service.SchoolService;
@@ -72,4 +73,13 @@ public class SchoolServiceImpl implements SchoolService {
 
     }
 
+    @Override
+    public ApiResponse<School> addNewSchools(SchoolDTO schoolDTO) {
+        School school = new School();
+        school.setName(schoolDTO.getName());
+        school.setAddress(schoolDTO.getAddress());
+        school.setStateAndCountry(schoolDTO.getStateAndCountry());
+        school.setSchoolType(schoolDTO.getSchoolType());
+        return new ApiResponse<>("School added successfully" , LocalDateTime.now(), schoolRepository.save(school));
+    }
 }

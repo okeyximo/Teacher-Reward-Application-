@@ -34,14 +34,19 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public boolean sendSimpleEmail(String body, String subject, String receiverEmail) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(sender);
-        message.setTo(receiverEmail);
-        message.setText(body);
-        message.setSubject(subject);
-        javaMailSender.send(message);
-        log.info("Email sent to %s successfully".formatted(receiverEmail));
-        return true;
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(sender);
+            message.setTo(receiverEmail);
+            message.setText(body);
+            message.setSubject(subject);
+            javaMailSender.send(message);
+            log.info("Email sent to %s successfully".formatted(receiverEmail));
+            return true;
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            return false;
+        }
     }
 
     @Override
