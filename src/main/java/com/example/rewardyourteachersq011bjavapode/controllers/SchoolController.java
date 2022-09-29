@@ -1,7 +1,10 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
 import com.example.rewardyourteachersq011bjavapode.dto.SchoolDTO;
+
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
+
+
 import com.example.rewardyourteachersq011bjavapode.models.School;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
@@ -31,9 +34,17 @@ public class SchoolController {
         return new ResponseEntity<>(schoolService.getAllSchools(page, size , sortBy) , OK);
     }
 
-    @PostMapping(value = "/schools/update/{id}")
+
+    @PutMapping(value = "/schools/update/{id}")
     ResponseEntity<?> updateSchool(@PathVariable(value ="id")Long id , @RequestBody SchoolDTO schoolDTO) {
         log.info("Successfully Updated {} ", schoolDTO.getName());
         return new ResponseEntity<>(schoolService.updateSchool(id , schoolDTO), OK);
     }
 }
+
+    @PostMapping("/add-school")
+    public ResponseEntity<ApiResponse<School>> addNewSchool(@RequestBody SchoolDTO schoolDTO) {
+        return new ResponseEntity<>(schoolService.addNewSchools(schoolDTO), HttpStatus.CREATED);
+    }
+}
+
