@@ -41,7 +41,7 @@ public class TeacherController {
         return teacherService.getAllTeacherBySchoolWithPagination(pageNo, pageSize, schoolName);
     }
 
-    @GetMapping("getAllWithPagination")
+    @GetMapping("/getAllWithPagination")
     public Page<TeacherDetails> getAllTeachersWithPagination(@RequestParam int pageNo,
                                                              @RequestParam int pageSize) {
 

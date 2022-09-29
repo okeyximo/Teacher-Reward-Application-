@@ -11,5 +11,9 @@ import java.util.List;
 public interface SchoolService {
     String addSchool(BufferedReader bufferedReader);
     ApiResponse<Page<School>> getAllSchools(int page , int size , String sortByName);
+
+    ApiResponse<School> updateSchool(Long id,SchoolDTO schoolDTO);
+
     ApiResponse <School> addNewSchools(SchoolDTO schoolDTO);
+
 }
