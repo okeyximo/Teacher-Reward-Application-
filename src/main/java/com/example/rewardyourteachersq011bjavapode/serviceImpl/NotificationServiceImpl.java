@@ -43,8 +43,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     public User findUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
-
-
     }
 
 @Override
