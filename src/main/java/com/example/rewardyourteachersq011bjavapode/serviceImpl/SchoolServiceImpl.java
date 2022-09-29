@@ -78,6 +78,7 @@ public class SchoolServiceImpl implements SchoolService {
         School updatedSchool = schoolRepository.save(schoolName);
         return new ApiResponse("Success", LocalDateTime.now(), updatedSchool);
     }
+
     public ApiResponse<School> addNewSchools(SchoolDTO schoolDTO) {
         School school = new School();
         school.setName(schoolDTO.getName());
@@ -86,4 +87,5 @@ public class SchoolServiceImpl implements SchoolService {
         school.setSchoolType(schoolDTO.getSchoolType());
         return new ApiResponse<>("School added successfully" , LocalDateTime.now(), schoolRepository.save(school));
     }
+
 }
