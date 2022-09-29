@@ -9,6 +9,7 @@ import com.example.rewardyourteachersq011bjavapode.service.AuthService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
