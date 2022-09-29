@@ -95,6 +95,8 @@ public class TeacherServiceImpl implements ITeacherService {
             walletRepository.save(userWallet);
 
 
+
+
             teacherDto.getSubjectList().forEach(subject -> {
                 subjectRepository.save(new Subject(subject, teacher));
             });

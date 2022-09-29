@@ -1,10 +1,9 @@
 package com.example.rewardyourteachersq011bjavapode.controllers;
 
 import com.example.rewardyourteachersq011bjavapode.dto.SchoolDTO;
-import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
+
 import com.example.rewardyourteachersq011bjavapode.models.School;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
 import com.example.rewardyourteachersq011bjavapode.serviceImpl.SchoolServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -35,5 +31,9 @@ public class SchoolController {
     ResponseEntity<?> updateSchool(@PathVariable(value ="id")Long id , @RequestBody SchoolDTO schoolDTO) {
         log.info("Successfully Updated {} ", schoolDTO.getName());
         return new ResponseEntity<>(schoolService.updateSchool(id , schoolDTO), OK);
+    }
+    @PostMapping("/add-school")
+    public ResponseEntity<ApiResponse<School>> addNewSchool(@RequestBody SchoolDTO schoolDTO) {
+        return new ResponseEntity<>(schoolService.addNewSchools(schoolDTO), HttpStatus.CREATED);
     }
 }
