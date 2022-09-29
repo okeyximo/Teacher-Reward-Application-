@@ -33,9 +33,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
         localDateTime = LocalDateTime.of(2022, Month.FEBRUARY, 12, 12, 12);
         userRepository.save(user);
         transactionRepository.saveAllAndFlush(List.of(
-                new Transaction(1L, TransactionType.DEBIT, "vincent sent me money", user),
-                new Transaction(2L, TransactionType.DEBIT, "wallet funded", user),
-                new Transaction(3L, TransactionType.DEBIT, "deposit", user)
+                new Transaction("101", TransactionType.DEBIT, "vincent sent me money", user),
+                new Transaction("102", TransactionType.DEBIT, "wallet funded", user),
+                new Transaction("103", TransactionType.DEBIT, "deposit", user)
         ));
     }
 
