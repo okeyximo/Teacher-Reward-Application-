@@ -1,12 +1,10 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
-import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
 
 import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
-import com.example.rewardyourteachersq011bjavapode.exceptions.WalletNotFoundException;
-
+import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserProfileDto;
@@ -135,8 +133,6 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             Wallet userWallet = new Wallet(new BigDecimal("0"), user);
             walletRepository.save(userWallet);
-            Wallet wallet = new Wallet(new BigDecimal(0), user);
-            walletRepository.save(wallet);
             return new UserRegistrationResponse("success", LocalDateTime.now());
         } else {
             throw new UserAlreadyExistException("User already exist");
