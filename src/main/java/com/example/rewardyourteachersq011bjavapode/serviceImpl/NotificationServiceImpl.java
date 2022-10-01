@@ -36,6 +36,14 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setNotificationBody(message);
         notification.setUser(user);
         notification.setNotificationType(notificationType);
+
+
+        boolean success = emailService.sendSimpleEmail(message, notificationType.toString(), user.getEmail());
+        if (success) {
+            log.info("Email notification sent to %s".formatted(user.getName()));
+        } else {
+            log.error("Email notification not sent");
+        }
         return notificationRepository.save(notification);
     }
 
