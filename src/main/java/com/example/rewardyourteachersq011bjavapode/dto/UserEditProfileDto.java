@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 public class UserEditProfileDto {
     private String Name;
     private String school;
+    private String telephone;
+    private String email;
 
 }

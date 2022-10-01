@@ -114,6 +114,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("Details not found"));
         user.setName(userEditProfileDto.getName());
         user.setSchool(userEditProfileDto.getSchool());
+        user.setEmail(userEditProfileDto.getEmail());
+        user.setTelephone(userEditProfileDto.getTelephone());
         userRepository.save(user);
         String response = userEditProfileDto.getName() + " Profile updated successfully";
         return new ApiResponse<>("success", LocalDateTime.now(), response);
