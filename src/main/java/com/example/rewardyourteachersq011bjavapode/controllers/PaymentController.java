@@ -24,8 +24,13 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.initTransaction(request));
     }
 
-    @GetMapping("/verify-transaction")
-    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(String reference) {
+//    @GetMapping("/verify-transaction")
+//    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(String reference) {
+//        return ResponseEntity.ok(paymentService.verifyTransaction(reference));
+//    }
+
+    @GetMapping("/verify-transaction/{reference}")
+    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(@PathVariable("reference") String reference) {
         return ResponseEntity.ok(paymentService.verifyTransaction(reference));
     }
 
