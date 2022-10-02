@@ -28,7 +28,7 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
 
 
-    @Value("vanillachioma@gmail.com")
+    @Value("decagonpode@gmail.com")
     private String sender;
 
 
