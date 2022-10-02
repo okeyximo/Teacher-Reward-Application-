@@ -1,5 +1,4 @@
 package com.example.rewardyourteachersq011bjavapode.cache;
-
 import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import net.jodah.expiringmap.ExpiringMap;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -58,6 +51,4 @@ public class LoggedOutJwtTokenCache {
         long secondAtLogout = Instant.now().getEpochSecond();
         return Math.max(0, secondAtExpiry - secondAtLogout);
     }
-
-
 }

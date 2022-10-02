@@ -1,29 +1,25 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.dto.SchoolDTO;
-import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.exceptions.SchoolNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.models.School;
+import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.repository.SchoolRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.service.SchoolService;
-import com.example.rewardyourteachersq011bjavapode.utils.ListOfSchoolUtil;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.example.rewardyourteachersq011bjavapode.utils.ListOfSchoolUtil.readAllSchoolsFromCsvFile;
@@ -70,6 +66,26 @@ public class SchoolServiceImpl implements SchoolService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public ApiResponse<School> updateSchool(Long id , SchoolDTO schoolDTO){
+        School schoolName = schoolRepository.findById (id).orElseThrow(() -> new SchoolNotFoundException("School not found"));
+        schoolName.setName(schoolDTO.getName());
+        schoolName.setAddress(schoolDTO.getAddress());
+        schoolName.setStateAndCountry(schoolDTO.getStateAndCountry());
+        schoolName.setSchoolType(schoolDTO.getSchoolType());
+        School updatedSchool = schoolRepository.save(schoolName);
+        return new ApiResponse("Success", LocalDateTime.now(), updatedSchool);
+    }
+
+    public ApiResponse<School> addNewSchools(SchoolDTO schoolDTO) {
+        School school = new School();
+        school.setName(schoolDTO.getName());
+        school.setAddress(schoolDTO.getAddress());
+        school.setStateAndCountry(schoolDTO.getStateAndCountry());
+        school.setSchoolType(schoolDTO.getSchoolType());
+        return new ApiResponse<>("School added successfully" , LocalDateTime.now(), schoolRepository.save(school));
     }
 
 }

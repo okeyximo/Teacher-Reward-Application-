@@ -17,10 +17,12 @@ import com.example.rewardyourteachersq011bjavapode.service.ITeacherService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+
+@ExtendWith(SpringExtension.class)
 class UserServiceImplTest {
     @Mock
     UserRepository userRepository;
@@ -44,8 +47,6 @@ class UserServiceImplTest {
     @InjectMocks
     UserServiceImpl userService;
 
-    @InjectMocks
-    ITeacherService teacherService;
 
     @Mock
     TeacherRepository teacherRepository;
@@ -85,7 +86,7 @@ class UserServiceImplTest {
         teacher = new Teacher( "chioma",Role.TEACHER,"chioma@gmail.com","1234", "","",transactionList, messageList, notificationList, "school","20", Status.INSERVICE,"", SchoolType.SECONDARY,"oxy.png",subjectList);
        // message = new Message("success", user);
         when(userRepository.save(user)).thenReturn(user);
-        message = new Message("new message", user);
+        message = new Message("new message",teacher.getName(), user );
         notification = new Notification("alertz", NotificationType.CREDIT_NOTIFICATION, user);
         subject = new Subject("Economics", teacher);
         wallet = new Wallet(new BigDecimal(100), user);
@@ -129,15 +130,7 @@ class UserServiceImplTest {
         assertThrows(UserAlreadyExistException.class, () -> userService.registerUser(userDto));
 
     }
-    @Test
-    void registerTeacher() throws IOException {
-        multipartFile = mock(MultipartFile.class);
-        TeacherRegistrationDto teacherDto = new TeacherRegistrationDto("2012-2016", listSubject, SchoolType.SECONDARY);
-        when(userRepository.findUserByEmail(teacherDto.getEmail())).thenReturn(Optional.empty());
-        when(userUtil.uploadImage(multipartFile)).thenReturn("uploaded");
-        var actual = teacherService.registerTeacher(teacherDto, multipartFile);
-        assertEquals("success", actual.getMessage());
-    }
+
     @Test
     void currentUserWalletBalance() {
         when(userUtil.getAuthenticatedUserEmail()).thenReturn(user.getEmail());

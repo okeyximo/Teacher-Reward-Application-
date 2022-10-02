@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "transactions")
 public class Transaction extends BaseClass{
-    private Long uuid;
+    private String uuid;
 
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
