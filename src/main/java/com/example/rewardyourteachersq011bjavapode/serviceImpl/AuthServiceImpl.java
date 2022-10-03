@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
             );
         } catch (AuthenticationException ex) {
             log.error(ex.getMessage());
-            throw new ResourceNotFoundException("invalid username or password");
+            throw new ResourceNotFoundException("Invalid username or password");
         }
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         User loggedInUser = userUtil.getUserByEmail(loginDTO.getEmail());
