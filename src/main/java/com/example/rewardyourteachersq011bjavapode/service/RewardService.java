@@ -6,6 +6,7 @@ import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 
 public interface RewardService {
 
-    ApiResponse<String> rewardTeacherByTeacherId(InitializeTransactionRequest request)
-            throws WalletNotFoundException;
+
+    ApiResponse<String> rewardTeacherByTeacherId(Long receiverID ,  InitializeTransactionRequest request) throws WalletNotFoundException ;
+
 }
