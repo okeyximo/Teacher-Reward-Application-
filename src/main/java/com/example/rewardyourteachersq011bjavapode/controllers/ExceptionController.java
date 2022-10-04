@@ -6,6 +6,7 @@ import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.example.rewardyourteachersq011bjavapode.exceptions.*;
@@ -36,6 +37,11 @@ public class ExceptionController {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ExceptionResponse> userNotFoundHandler(UserNotFoundException exception){
         return responseService.response(new ExceptionResponse(exception.getMessage(),LocalDateTime.now(),HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> userNotFoundHandler(MethodArgumentNotValidException exception){
+        return responseService.response(new ExceptionResponse("Email not valid",LocalDateTime.now(),HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
     }
 
 

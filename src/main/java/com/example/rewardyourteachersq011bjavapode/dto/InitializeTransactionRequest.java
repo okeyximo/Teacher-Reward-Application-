@@ -15,9 +15,6 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 public class InitializeTransactionRequest {
-
     private BigDecimal amount;
     private String email;
-    private Long userId;
-
 }
