@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         User loggedInUser = userUtil.getUserByEmail(loginDTO.getEmail());
 
-        return new ApiResponse<>("success", LocalDateTime.now(), new PrincipalDto(loggedInUser.getId(), loggedInUser.getName(), loggedInUser.getEmail(), jwtUtil.generateToken(loginDTO.getEmail())));
+        return new ApiResponse<>("success", LocalDateTime.now(), new PrincipalDto(loggedInUser.getId(), loggedInUser.getName(), loggedInUser.getEmail(), loggedInUser.getRole().toString(),jwtUtil.generateToken(loginDTO.getEmail())));
 
     }
 
