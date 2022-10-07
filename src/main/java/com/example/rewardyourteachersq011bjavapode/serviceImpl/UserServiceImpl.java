@@ -83,6 +83,12 @@ public class UserServiceImpl implements UserService {
         return new ApiResponse<>("success", LocalDateTime.now(), dto);
     }
 
+    @Override
+    public ApiResponse<UserProfileDto> viewUserProfile(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("user id not found"));
+        UserProfileDto dto = convertUserModelToDto(user);
+        return new ApiResponse<>("success", LocalDateTime.now(), dto);
+    }
 
     @Override
     public BigDecimal currentBalance() {
@@ -100,6 +106,18 @@ public class UserServiceImpl implements UserService {
         dto.setAbout(teacher.getAbout());
         dto.setEmail(teacher.getEmail());
         dto.setTelephone(teacher.getTelephone());
+        dto.setSchoolType(teacher.getSchoolType());
+        dto.setTeachingPeriod(teacher.getTeachingPeriod());
+        return dto;
+    }
+
+    private UserProfileDto convertUserModelToDto(User user) {
+        UserProfileDto dto = new UserProfileDto();
+        dto.setName(user.getName());
+        dto.setSchool(user.getSchool());
+        dto.setAbout(user.getAbout());
+        dto.setEmail(user.getEmail());
+        dto.setTelephone(user.getTelephone());
         return dto;
     }
 
@@ -112,8 +130,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse<String> editUserProfile(CustomUserDetails currentUser, UserEditProfileDto userEditProfileDto) {
         User user = userRepository.findUserByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("Details not found"));
+        log.info("Name : {} ", userEditProfileDto.getName());
         user.setName(userEditProfileDto.getName());
         user.setSchool(userEditProfileDto.getSchool());
+        user.setEmail(userEditProfileDto.getEmail());
+        user.setTelephone(userEditProfileDto.getTelephone());
+        log.info("DTO : {} ", userEditProfileDto);
         userRepository.save(user);
         String response = userEditProfileDto.getName() + " Profile updated successfully";
         return new ApiResponse<>("success", LocalDateTime.now(), response);

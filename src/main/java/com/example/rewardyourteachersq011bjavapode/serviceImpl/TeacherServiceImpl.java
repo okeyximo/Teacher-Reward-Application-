@@ -68,6 +68,7 @@ public class TeacherServiceImpl implements ITeacherService {
         Teacher teacher =  teacherRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("teacher's details not found"));
         teacher.setName(teacherEditProfileDto.getName());
         teacher.setSchool(teacherEditProfileDto.getSchool());
+        teacher.setTelephone(teacherEditProfileDto.getTelephone());
         teacher.setTeachingPeriod(teacherEditProfileDto.getTeachingPeriod());
         teacher.setSchoolType(teacherEditProfileDto.getSchoolType());
         teacherRepository.save(teacher);
