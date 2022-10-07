@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -54,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register-student")
-    public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody @Valid UserDto userDto) {
         log.info("Successfully Registered {} ", userDto.getEmail());
         return new ResponseEntity<>(userService.registerUser(userDto), CREATED);
 
