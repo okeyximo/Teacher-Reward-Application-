@@ -43,6 +43,10 @@ public class UserController {
         return new ResponseEntity<>(userService.currentBalance(),OK);
     }
 
+    @GetMapping("/view-student/{id}")
+    public ResponseEntity<?> viewStudentProfile(@PathVariable(value = "id") Long id) {
+        return new ResponseEntity<>(userService.viewUserProfile(id), HttpStatus.OK);
+    }
     @PutMapping(value="/edit-userprofile")
     public ResponseEntity<ApiResponse<String>> editProfile(@CurrentUser CustomUserDetails currentUser, @RequestBody UserEditProfileDto userDto){
         log.info("successfully updated");
