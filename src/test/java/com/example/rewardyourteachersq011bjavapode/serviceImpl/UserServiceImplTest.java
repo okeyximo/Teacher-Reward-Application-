@@ -106,7 +106,7 @@ class UserServiceImplTest {
 
     @Test
     void viewProfile() {
-        UserProfileDto profileDto = new UserProfileDto("","chioma","school","chioma@gmail.com","","");
+        UserProfileDto profileDto = new UserProfileDto("","chioma","school","chioma@gmail.com","","" , SchoolType.SECONDARY , "");
         when(teacherRepository.findById(1L)).thenReturn(Optional.ofNullable(teacher));
         var actual = userService.viewProfile(1l);
         actual.setTimeStamp(localDateTime);
