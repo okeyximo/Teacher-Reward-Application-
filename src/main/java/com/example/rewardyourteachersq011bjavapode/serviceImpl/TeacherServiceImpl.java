@@ -52,14 +52,14 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public Page<TeacherDetails> getAllTeacherBySchoolWithPagination(int pageNo, int pageSize, String schoolName) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        List<TeacherDetails> teacherDetailsList = teacherRepository.findAllBySchool(schoolName, pageable).stream().map(teacher -> new TeacherDetails(teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod())).collect(Collectors.toList());
+        List<TeacherDetails> teacherDetailsList = teacherRepository.findAllBySchool(schoolName, pageable).stream().map(teacher -> new TeacherDetails(teacher.getId(),  teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod() , teacher.getRole())).collect(Collectors.toList());
         return new PageImpl<>(teacherDetailsList, pageable, teacherDetailsList.size());
     }
 
     @Override
     public Page<TeacherDetails> getAllTeachersWithPagination(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        List<TeacherDetails> teacherDetailsList = teacherRepository.findAll(pageable).stream().map(teacher -> new TeacherDetails(teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod())).collect(Collectors.toList());
+        List<TeacherDetails> teacherDetailsList = teacherRepository.findAll(pageable).stream().map(teacher -> new TeacherDetails(teacher.getId(),  teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod() , teacher.getRole())).collect(Collectors.toList());
         return new PageImpl<>(teacherDetailsList, pageable, teacherDetailsList.size());
     }
 
