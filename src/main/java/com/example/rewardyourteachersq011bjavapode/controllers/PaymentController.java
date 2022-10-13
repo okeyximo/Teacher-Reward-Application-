@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -31,11 +32,10 @@ public class PaymentController {
     public void verifyTransaction(String reference, HttpServletResponse response) throws IOException {
         paymentService.verifyTransaction(reference);
         response.sendRedirect("http://localhost:3000/student-dashboard");
-
     }
 
-    @PostMapping("/rewardTeacher")
-    public ResponseEntity<ApiResponse<String>> rewardTeacher(@RequestBody InitializeTransactionRequest request) {
-        return ResponseEntity.ok(rewardService.rewardTeacherByTeacherId(request));
+    @PostMapping("/rewardTeacher/{teacherId}")
+    public ResponseEntity<ApiResponse<String>> rewardTeacher(@PathVariable("teacherId") Long teacherId,  @RequestBody InitializeTransactionRequest request) {
+        return ResponseEntity.ok(rewardService.rewardTeacherByTeacherId(teacherId, request));
     }
 }

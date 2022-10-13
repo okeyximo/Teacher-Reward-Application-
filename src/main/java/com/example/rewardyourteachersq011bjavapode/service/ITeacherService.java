@@ -17,5 +17,5 @@ public interface ITeacherService {
     Page<TeacherDetails> getAllTeachersWithPagination(int pageNo, int pageSize);
     ApiResponse<String> editTeacherProfile(CustomUserDetails currentUser, TeacherEditProfileDto teacherEditProfileDto);
 
-    UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException;
+    UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDtod) throws IOException;
 }

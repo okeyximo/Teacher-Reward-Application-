@@ -52,14 +52,14 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public Page<TeacherDetails> getAllTeacherBySchoolWithPagination(int pageNo, int pageSize, String schoolName) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        List<TeacherDetails> teacherDetailsList = teacherRepository.findAllBySchool(schoolName, pageable).stream().map(teacher -> new TeacherDetails(teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod())).collect(Collectors.toList());
+        List<TeacherDetails> teacherDetailsList = teacherRepository.findAllBySchool(schoolName, pageable).stream().map(teacher -> new TeacherDetails(teacher.getId(),  teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod() , teacher.getRole())).collect(Collectors.toList());
         return new PageImpl<>(teacherDetailsList, pageable, teacherDetailsList.size());
     }
 
     @Override
     public Page<TeacherDetails> getAllTeachersWithPagination(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        List<TeacherDetails> teacherDetailsList = teacherRepository.findAll(pageable).stream().map(teacher -> new TeacherDetails(teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod())).collect(Collectors.toList());
+        List<TeacherDetails> teacherDetailsList = teacherRepository.findAll(pageable).stream().map(teacher -> new TeacherDetails(teacher.getId(),  teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod() , teacher.getRole())).collect(Collectors.toList());
         return new PageImpl<>(teacherDetailsList, pageable, teacherDetailsList.size());
     }
 
@@ -68,6 +68,7 @@ public class TeacherServiceImpl implements ITeacherService {
         Teacher teacher =  teacherRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("teacher's details not found"));
         teacher.setName(teacherEditProfileDto.getName());
         teacher.setSchool(teacherEditProfileDto.getSchool());
+        teacher.setTelephone(teacherEditProfileDto.getTelephone());
         teacher.setTeachingPeriod(teacherEditProfileDto.getTeachingPeriod());
         teacher.setSchoolType(teacherEditProfileDto.getSchoolType());
         teacherRepository.save(teacher);
@@ -76,7 +77,7 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException {
+    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto) throws IOException {
         String email = teacherDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
 
@@ -89,7 +90,7 @@ public class TeacherServiceImpl implements ITeacherService {
             teacher.setTeachingPeriod(teacherDto.getTeachingPeriod());
             teacher.setSchoolType(teacherDto.getSchoolType());
             teacher.setRole(TEACHER);
-            teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
+           // teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
             Wallet userWallet = new Wallet(new BigDecimal("0"), teacher);
             walletRepository.save(userWallet);

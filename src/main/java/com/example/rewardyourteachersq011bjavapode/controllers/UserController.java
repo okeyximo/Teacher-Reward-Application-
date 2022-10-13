@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -43,6 +45,10 @@ public class UserController {
         return new ResponseEntity<>(userService.currentBalance(),OK);
     }
 
+    @GetMapping("/view-student/{id}")
+    public ResponseEntity<?> viewStudentProfile(@PathVariable(value = "id") Long id) {
+        return new ResponseEntity<>(userService.viewUserProfile(id), HttpStatus.OK);
+    }
     @PutMapping(value="/edit-userprofile")
     public ResponseEntity<ApiResponse<String>> editProfile(@CurrentUser CustomUserDetails currentUser, @RequestBody UserEditProfileDto userDto){
         log.info("successfully updated");
@@ -50,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register-student")
-    public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody @Valid UserDto userDto) {
         log.info("Successfully Registered {} ", userDto.getEmail());
         return new ResponseEntity<>(userService.registerUser(userDto), CREATED);
 
