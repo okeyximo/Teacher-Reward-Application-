@@ -110,6 +110,7 @@ public class PaymentServiceImpl implements PaymentService {
                 BigDecimal amount = payStackResponse.getData().getAmount();
                 String email = trackReference.get(reference);
                 fundWallet(email, amount);
+                trackReference.remove(reference);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -122,7 +123,7 @@ public class PaymentServiceImpl implements PaymentService {
         Wallet wallet = walletRepository.findWalletByUserEmail(email).orElseThrow(() -> new WalletNotFoundException("Wallet not found"));
         wallet.setBalance(wallet.getBalance().add(amount));
         walletRepository.save(wallet);
-        String response = "Credit!, Amt: %s; Wallet Balance: %s".formatted(amount.toString(), wallet.getBalance().toString());
+        String response = "Credit!,\nAmt: %s;\nWallet Balance: %s".formatted(amount.toString(), wallet.getBalance().toString());
         log.info("User with email %s successfully deposited %s to his wallet".formatted(email, amount));
         notificationService.saveNotification(email, response, CREDIT_NOTIFICATION);
     }

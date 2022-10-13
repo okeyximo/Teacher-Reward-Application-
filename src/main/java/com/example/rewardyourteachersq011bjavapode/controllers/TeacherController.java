@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class TeacherController {
         return teacherService.getAllTeacherBySchoolWithPagination(pageNo, pageSize, schoolName);
     }
 
-    @GetMapping("getAllWithPagination")
+    @GetMapping("/getAllWithPagination")
     public Page<TeacherDetails> getAllTeachersWithPagination(@RequestParam int pageNo,
                                                              @RequestParam int pageSize) {
 
@@ -66,7 +67,7 @@ public class TeacherController {
     }
 
     @PostMapping(value = "/register-teacher")
-    public ResponseEntity<UserRegistrationResponse> registerTeacher(TeacherRegistrationDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
+    public ResponseEntity<UserRegistrationResponse> registerTeacher(@Valid TeacherRegistrationDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
         log.info("Successfully Registered {} ", teacherDto.getEmail());
         return new ResponseEntity<>(teacherService.registerTeacher(teacherDto, teacherIdImage), HttpStatus.CREATED);
     }

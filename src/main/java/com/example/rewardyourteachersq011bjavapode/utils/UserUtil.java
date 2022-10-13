@@ -4,7 +4,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
+import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
+import com.example.rewardyourteachersq011bjavapode.repository.TeacherRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class UserUtil {
     private final Cloudinary cloudinary;
 
     private final UserRepository userRepository;
+    private final TeacherRepository teacherRepository;
     private static File convertMultipartToFile(MultipartFile image) throws IOException {
         File convertedFile;
         String file = image.getOriginalFilename();
@@ -57,10 +60,25 @@ public class UserUtil {
                 .orElseThrow(()-> new UserNotFoundException("User with " + email + " not found"));
     }
 
+    public Teacher getTeacherByEmail(String email){
+        return  teacherRepository.findByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException("Teacher with " + email + " not found"));
+    }
+
     public String getAuthenticatedUserEmail() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         return userDetails.getUsername();
+    }
+
+    public Teacher findTeacherById(Long id){
+        return teacherRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("Teacher Not Found"));
+    }
+
+    public User findUserById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("Teacher Not Found"));
     }
 
 }

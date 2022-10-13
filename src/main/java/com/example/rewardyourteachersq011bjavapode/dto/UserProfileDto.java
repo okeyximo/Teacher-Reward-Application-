@@ -1,5 +1,6 @@
 package com.example.rewardyourteachersq011bjavapode.dto;
 
+import com.example.rewardyourteachersq011bjavapode.enums.SchoolType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,6 @@ public class UserProfileDto {
     private String email;
     private String post;
     private String Telephone;
+    private SchoolType schoolType;
+    private String teachingPeriod;
 }

@@ -40,7 +40,8 @@ public class Teacher extends User{
     private List<Subject> subject;
 
 
-    public Teacher(String name, Role role, String email, String password, String about, String telephone, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school, String teachingPeriod, Status status, String post, SchoolType schoolType, String teacherIdUrl, List<Subject> subject) {
+
+    public Teacher(String name, Role role, String email, String password, String about, String telephone, List<Transaction> transactionList, List<Message> messageList, List<Notification> notificationList, String school, String teachingPeriod, Status status, String post, SchoolType schoolType, String teacherIdUrl, List<Subject> subject ) {
         super(name, role, email, password, about, telephone, transactionList, messageList, notificationList, school);
         this.teachingPeriod = teachingPeriod;
         this.status = status;

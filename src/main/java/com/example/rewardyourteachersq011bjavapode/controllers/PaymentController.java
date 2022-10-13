@@ -24,13 +24,18 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.initTransaction(request));
     }
 
-    @GetMapping("/verify-transaction")
-    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(String reference) {
+//    @GetMapping("/verify-transaction")
+//    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(String reference) {
+//        return ResponseEntity.ok(paymentService.verifyTransaction(reference));
+//    }
+
+    @GetMapping("/verify-transaction/{reference}")
+    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(@PathVariable("reference") String reference) {
         return ResponseEntity.ok(paymentService.verifyTransaction(reference));
     }
 
-    @PostMapping("/rewardTeacher")
-    public ResponseEntity<ApiResponse<String>> rewardTeacher(@RequestBody InitializeTransactionRequest request) {
-        return ResponseEntity.ok(rewardService.rewardTeacherByTeacherId(request));
+    @PostMapping("/rewardTeacher/{teacherId}")
+    public ResponseEntity<ApiResponse<String>> rewardTeacher(@PathVariable("teacherId") Long teacherId,  @RequestBody InitializeTransactionRequest request) {
+        return ResponseEntity.ok(rewardService.rewardTeacherByTeacherId(teacherId, request));
     }
 }

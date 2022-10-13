@@ -33,9 +33,8 @@ public class RewardServiceImpl implements RewardService {
     private final TransactionRepository transactionRepository;
     private final UUID uuid = UUID.randomUUID();
     @Override
-    public ApiResponse<String> rewardTeacherByTeacherId(InitializeTransactionRequest request) throws WalletNotFoundException {
+    public ApiResponse<String> rewardTeacherByTeacherId(Long receiverID ,  InitializeTransactionRequest request) throws WalletNotFoundException {
         BigDecimal amount = request.getAmount();
-        Long receiverID = request.getUserId();
         User sender = userUtil.getUserByEmail(userUtil.getAuthenticatedUserEmail());
         User receiver = userRepository.findUserById(receiverID).orElseThrow(() -> new UserNotFoundException("User not found"));
         Wallet receiversWallet = walletRepository.findWalletByUserId(receiverID).orElseThrow(()-> new WalletNotFoundException("Wallet not found"));
@@ -51,7 +50,7 @@ public class RewardServiceImpl implements RewardService {
             walletRepository.save(receiversWallet);
             // todo: create notification for both receiver and sender, create transaction for both receiver and sender
             notificationService.saveNotification(receiverID , "you just receive a reward of: " + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
-            notificationService.saveNotification(receiver.getId(), "you just sent a reward of: " + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
+            notificationService.saveNotification(sender.getId(), "you just sent a reward of: " + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
             Transaction senderTransaction = new Transaction();
             senderTransaction.setUuid(uuid.toString());
             senderTransaction.setTransactionType(TransactionType.DEBIT);
