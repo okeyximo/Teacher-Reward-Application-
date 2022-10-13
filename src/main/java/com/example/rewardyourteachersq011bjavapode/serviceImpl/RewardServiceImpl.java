@@ -50,8 +50,8 @@ public class RewardServiceImpl implements RewardService {
             walletRepository.save(sendersWallet);
             walletRepository.save(receiversWallet);
             // todo: create notification for both receiver and sender, create transaction for both receiver and sender
-            notificationService.saveNotification(receiverID , "you just receive a reward of: " + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
-            notificationService.saveNotification(receiver.getId(), "you just sent a reward of: " + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
+            notificationService.saveNotification(receiverID , "You received ₦" + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
+            notificationService.saveNotification(receiver.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
             Transaction senderTransaction = new Transaction();
             senderTransaction.setUuid(uuid.toString());
             senderTransaction.setTransactionType(TransactionType.DEBIT);
@@ -67,7 +67,7 @@ public class RewardServiceImpl implements RewardService {
             String respond = "Reward Unsuccessful";
             return new ApiResponse<>("Insufficient balance in your Wallet", LocalDateTime.now(), respond);
         }
-        String message = "A Reward of " + amount +  " was sent Successfully to " + receiver.getName();
+        String message = "A Reward of ₦" + amount +  " was sent Successfully to " + receiver.getName();
         return new ApiResponse<>("success",  LocalDateTime.now(), message);
     }
 }

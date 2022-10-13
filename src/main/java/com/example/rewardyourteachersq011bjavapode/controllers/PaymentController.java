@@ -26,11 +26,11 @@ public class PaymentController {
     public ResponseEntity<?> pay(@RequestBody InitializeTransactionRequest request) throws Exception {
         return ResponseEntity.ok(paymentService.initTransaction(request));
     }
-
+// todo : fix
     @GetMapping("/verify-transaction")
     public void verifyTransaction(String reference, HttpServletResponse response) throws IOException {
         paymentService.verifyTransaction(reference);
-        response.sendRedirect("http://localhost:3000/studentDashboard");
+        response.sendRedirect("http://localhost:3000/student-dashboard");
 
     }
 
