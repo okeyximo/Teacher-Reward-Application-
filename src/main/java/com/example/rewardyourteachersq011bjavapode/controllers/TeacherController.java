@@ -67,8 +67,9 @@ public class TeacherController {
     }
 
     @PostMapping(value = "/register-teacher")
-    public ResponseEntity<UserRegistrationResponse> registerTeacher(@Valid TeacherRegistrationDto teacherDto, @RequestPart MultipartFile teacherIdImage) throws IOException {
+
+    public ResponseEntity<UserRegistrationResponse> registerTeacher(@Valid TeacherRegistrationDto teacherDto) throws IOException {
         log.info("Successfully Registered {} ", teacherDto.getEmail());
-        return new ResponseEntity<>(teacherService.registerTeacher(teacherDto, teacherIdImage), HttpStatus.CREATED);
+        return new ResponseEntity<>(teacherService.registerTeacher(teacherDto), HttpStatus.CREATED);
     }
 }

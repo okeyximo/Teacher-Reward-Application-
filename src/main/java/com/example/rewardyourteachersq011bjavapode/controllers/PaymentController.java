@@ -11,6 +11,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
@@ -24,14 +28,10 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.initTransaction(request));
     }
 
-//    @GetMapping("/verify-transaction")
-//    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(String reference) {
-//        return ResponseEntity.ok(paymentService.verifyTransaction(reference));
-//    }
-
-    @GetMapping("/verify-transaction/{reference}")
-    public ResponseEntity<VerifyTransactionResponse> verifyTransaction(@PathVariable("reference") String reference) {
-        return ResponseEntity.ok(paymentService.verifyTransaction(reference));
+    @GetMapping("/verify-transaction")
+    public void verifyTransaction(String reference, HttpServletResponse response) throws IOException {
+        paymentService.verifyTransaction(reference);
+        response.sendRedirect("http://localhost:3000/student-dashboard");
     }
 
     @PostMapping("/rewardTeacher/{teacherId}")

@@ -77,7 +77,7 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException {
+    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto) throws IOException {
         String email = teacherDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
 
@@ -90,7 +90,7 @@ public class TeacherServiceImpl implements ITeacherService {
             teacher.setTeachingPeriod(teacherDto.getTeachingPeriod());
             teacher.setSchoolType(teacherDto.getSchoolType());
             teacher.setRole(TEACHER);
-            teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
+           // teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
             Wallet userWallet = new Wallet(new BigDecimal("0"), teacher);
             walletRepository.save(userWallet);
