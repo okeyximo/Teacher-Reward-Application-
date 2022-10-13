@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -36,14 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setNotificationBody(message);
         notification.setUser(user);
         notification.setNotificationType(notificationType);
-
-
-        boolean success = emailService.sendSimpleEmail(message, notificationType.toString(), user.getEmail());
-        if (success) {
-            log.info("Email notification sent to %s".formatted(user.getName()));
-        } else {
-            log.error("Email notification not sent");
-        }
+        new Thread(() -> sendEmail(message, notificationType, user)).start();
         return notificationRepository.save(notification);
     }
 
@@ -51,13 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notification saveNotification(String email, String message, NotificationType notificationType) {
         User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
-
-        boolean success = emailService.sendSimpleEmail(message, notificationType.toString(), email);
-        if (success) {
-            log.info("Email notification sent to %s".formatted(user.getName()));
-        } else {
-            log.error("Email notification not sent");
-        }
+        new Thread(() -> sendEmail(message, notificationType, user)).start();
         return notificationRepository.save(new Notification(message, notificationType, user));
     }
 
@@ -68,9 +57,34 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotificationDto> retrieveUserNotifications() {
         String userEmail = userUtil.getAuthenticatedUserEmail();
-        return notificationRepository.findAllByUserEmail(userEmail)
-                .stream()
-                .map(n -> new NotificationDto(n.getNotificationBody(), n.getNotificationType()))
+        return notificationRepository.findAllByUserEmailOrderByUpdateDateDesc(userEmail)
+                .stream().map(this::mapNotificationDto)
                 .toList();
+    }
+
+
+    private void sendEmail(String message, NotificationType notificationType, User user) {
+        boolean success = emailService.sendSimpleEmail(message, notificationType.toString(), user.getEmail());
+        if (success) {
+            log.info("Email notification sent to %s".formatted(user.getName()));
+        } else {
+            log.error("Email notification not sent");
+        }
+    }
+
+
+    private NotificationDto mapNotificationDto(Notification n) {
+        NotificationDto notificationDTO;
+        if (n.getUpdateDate().toLocalDate().equals(LocalDate.now())) {
+            notificationDTO = new NotificationDto(n.getNotificationBody(),
+                    n.getNotificationType(), "Today, " + n.getCreateDate()
+                    .format(DateTimeFormatter.ofPattern("HH:mm a")).toUpperCase());
+        } else {
+            notificationDTO = new NotificationDto(n.getNotificationBody(),
+                    n.getNotificationType(), n.getCreateDate()
+                    .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a")).toUpperCase());
+
+        }
+        return notificationDTO;
     }
 }
