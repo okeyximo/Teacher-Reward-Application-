@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
 
     private UserProfileDto convertModelToDto(Teacher teacher) {
         UserProfileDto dto = new UserProfileDto();
+        dto.setId(teacher.getId());
         dto.setName(teacher.getName());
         dto.setSchool(teacher.getSchool());
         dto.setPost(teacher.getPost());

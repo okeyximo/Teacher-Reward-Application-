@@ -103,7 +103,8 @@ class TeacherServiceImplTest {
         TeacherRegistrationDto teacherDto = new TeacherRegistrationDto("2012-2016", listSubject, SchoolType.SECONDARY);
         when(userRepository.findUserByEmail(teacherDto.getEmail())).thenReturn(Optional.empty());
         when(userUtil.uploadImage(multipartFile)).thenReturn("uploaded");
-        var actual = teacherServiceImpl.registerTeacher(teacherDto, multipartFile);
+
+        var actual = teacherServiceImpl.registerTeacher(teacherDto);
         assertEquals("success", actual.getMessage());
     }
 }
