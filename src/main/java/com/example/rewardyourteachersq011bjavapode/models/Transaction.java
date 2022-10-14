@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 
 @AllArgsConstructor
@@ -18,6 +20,7 @@ public class Transaction extends BaseClass{
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     private String description;
+    private BigDecimal amount;
 
     @JsonBackReference
     @ManyToOne
