@@ -50,7 +50,7 @@ public class RewardServiceImpl implements RewardService {
             walletRepository.save(receiversWallet);
 
             notificationService.saveNotification(receiverID , "You received ₦" + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
-            notificationService.saveNotification(receiver.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
+            notificationService.saveNotification(sender.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
             Transaction senderTransaction = new Transaction();
             senderTransaction.setUuid(uuid.toString());
             senderTransaction.setTransactionType(TransactionType.DEBIT);
