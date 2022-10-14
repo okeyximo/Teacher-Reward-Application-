@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -48,8 +49,7 @@ public class RewardServiceImpl implements RewardService {
         if (sendersWallet.getBalance().compareTo(amount) >= 0 ){
             sendersWallet.setBalance(sendersWallet.getBalance().subtract(amount));
             receiversWallet.setBalance(receiversWallet.getBalance().add(amount));
-            walletRepository.save(sendersWallet);
-            walletRepository.save(receiversWallet);
+            walletRepository.saveAll(List.of(sendersWallet, receiversWallet));
             notificationService.saveNotification(receiverID , "You received ₦" + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
             notificationService.saveNotification(receiver.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
             transactionService.saveTransaction(amount, TransactionType.DEBIT, sender, receiver);

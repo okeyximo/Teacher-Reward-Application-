@@ -62,6 +62,13 @@ public class NotificationServiceImpl implements NotificationService {
                 .toList();
     }
 
+    @Override
+    public List<NotificationDto> retrieveUserMostRecentNotification(){
+        String userEmail = userUtil.getAuthenticatedUserEmail();
+        return notificationRepository.findFirst5ByUser_EmailOrderByUpdateDateDesc(userEmail)
+                .stream().map(this::mapNotificationDto).toList();
+    }
+
 
     private void sendEmail(String message, NotificationType notificationType, User user) {
         boolean success = emailService.sendSimpleEmail(message, notificationType.toString(), user.getEmail());

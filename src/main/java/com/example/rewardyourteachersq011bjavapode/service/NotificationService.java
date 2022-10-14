@@ -12,4 +12,6 @@ public interface NotificationService {
     Notification saveNotification(String email, String message, NotificationType notificationType);
 
     List<NotificationDto> retrieveUserNotifications();
+
+    List<NotificationDto> retrieveUserMostRecentNotification();
 }
