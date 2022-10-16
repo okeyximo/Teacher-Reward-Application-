@@ -6,7 +6,6 @@ import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.enums.TransactionType;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.WalletNotFoundException;
-import com.example.rewardyourteachersq011bjavapode.models.Transaction;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.models.Wallet;
 import com.example.rewardyourteachersq011bjavapode.repository.TransactionRepository;
