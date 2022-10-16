@@ -10,7 +10,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiResponse<T> {
+
     private String message;
     private LocalDateTime timeStamp;
     private T data;
+
+    public ApiResponse(String message, T data, LocalDateTime timeStamp) {
+        this.message = message;
+        this.timeStamp = LocalDateTime.now();
+        this.data = data;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
@@ -25,7 +26,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -46,6 +46,8 @@ public class TeacherServiceImpl implements ITeacherService {
     private final WalletRepository walletRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserUtil userUtil;
+
+    private final JwtUtil jwtUtil;
 
 
 
@@ -106,5 +108,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     }
 
+
 }
+
 

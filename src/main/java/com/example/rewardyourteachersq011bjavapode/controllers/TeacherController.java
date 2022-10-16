@@ -7,8 +7,7 @@ import com.example.rewardyourteachersq011bjavapode.dto.TeacherDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
 import com.example.rewardyourteachersq011bjavapode.models.User;
-import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+import com.example.rewardyourteachersq011bjavapode.response.*;
 import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.service.ITeacherService;
 import lombok.RequiredArgsConstructor;
@@ -72,4 +71,8 @@ public class TeacherController {
         log.info("Successfully Registered {} ", teacherDto.getEmail());
         return new ResponseEntity<>(teacherService.registerTeacher(teacherDto), HttpStatus.CREATED);
     }
+
 }
+
+
+
