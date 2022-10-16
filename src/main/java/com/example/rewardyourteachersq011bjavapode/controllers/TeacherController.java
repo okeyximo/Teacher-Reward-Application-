@@ -7,8 +7,7 @@ import com.example.rewardyourteachersq011bjavapode.dto.TeacherDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
 import com.example.rewardyourteachersq011bjavapode.models.User;
-import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+import com.example.rewardyourteachersq011bjavapode.response.*;
 import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.service.ITeacherService;
 import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
@@ -77,9 +76,13 @@ public class TeacherController {
         return new ResponseEntity<>(teacherService.registerTeacher(teacherDto), HttpStatus.CREATED);
     }
 
+
     @GetMapping("/most-recent-notification")
     public ResponseEntity<?> retrieveUserNotifications (){
         log.info("user notification retrieve successfully");
         return new ResponseEntity<>(notificationService.retrieveUserMostRecentNotification(), OK);
     }
 }
+
+
+

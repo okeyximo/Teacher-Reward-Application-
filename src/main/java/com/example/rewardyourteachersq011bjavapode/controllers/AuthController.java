@@ -5,9 +5,9 @@ import com.example.rewardyourteachersq011bjavapode.dto.PrincipalDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.exceptions.ResourceNotFoundException;
-import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+import com.example.rewardyourteachersq011bjavapode.response.*;
 import com.example.rewardyourteachersq011bjavapode.service.AuthService;
+import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import com.example.rewardyourteachersq011bjavapode.utils.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,12 +27,19 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final UserService userService;
     private final ResponseService<ApiResponse<PrincipalDto>> responseService;
 
 
     @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginDTO authRequest) throws ResourceNotFoundException {
         return responseService.response(authService.loginUser(authRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/social-login")
+    public ResponseEntity<?> generateSocialToken(@RequestBody SocialLoginRequest authRequest){
+        return responseService.response(authService.socialLogin(authRequest), HttpStatus.OK);
     }
 
 
