@@ -13,12 +13,14 @@ import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
 import com.example.rewardyourteachersq011bjavapode.service.RewardService;
+import com.example.rewardyourteachersq011bjavapode.service.TransactionService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class RewardServiceImpl implements RewardService {
     private final WalletRepository walletRepository;
     private final UserUtil userUtil;
     private final NotificationServiceImpl notificationService;
+    private final TransactionService transactionService;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
     private final UUID uuid = UUID.randomUUID();
@@ -45,27 +48,16 @@ public class RewardServiceImpl implements RewardService {
         if (sendersWallet.getBalance().compareTo(amount) >= 0 ){
             sendersWallet.setBalance(sendersWallet.getBalance().subtract(amount));
             receiversWallet.setBalance(receiversWallet.getBalance().add(amount));
-            walletRepository.save(sendersWallet);
-            walletRepository.save(receiversWallet);
-            // todo: create notification for both receiver and sender, create transaction for both receiver and sender
-            notificationService.saveNotification(receiverID , "you just receive a reward of: " + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
-            notificationService.saveNotification(sender.getId(), "you just sent a reward of: " + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
-            Transaction senderTransaction = new Transaction();
-            senderTransaction.setUuid(uuid.toString());
-            senderTransaction.setTransactionType(TransactionType.DEBIT);
-            senderTransaction.setDescription("Debit Alert of: "  + amount + " Receiver is: "  + receiver.getName());
-            Transaction receiverTransaction = new Transaction();
-            receiverTransaction.setUuid(uuid.toString());
-            receiverTransaction.setTransactionType(TransactionType.CREDIT);
-            receiverTransaction.setDescription("Credit Alert of: " + amount + " Sender is: " + sender.getName());
-            transactionRepository.save(senderTransaction);
-            transactionRepository.save(receiverTransaction);
-
+            walletRepository.saveAll(List.of(sendersWallet, receiversWallet));
+            notificationService.saveNotification(receiverID , "You received ₦" + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
+            notificationService.saveNotification(receiver.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
+            transactionService.saveTransaction(amount, TransactionType.DEBIT, sender, receiver);
+            transactionService.saveTransaction(amount, TransactionType.CREDIT, sender, receiver);
          }else{
             String respond = "Reward Unsuccessful";
             return new ApiResponse<>("Insufficient balance in your Wallet", LocalDateTime.now(), respond);
         }
-        String message = "A Reward of " + amount +  " was sent Successfully to " + receiver.getName();
+        String message = "A Reward of ₦" + amount +  " was sent Successfully to " + receiver.getName();
         return new ApiResponse<>("success",  LocalDateTime.now(), message);
     }
 }

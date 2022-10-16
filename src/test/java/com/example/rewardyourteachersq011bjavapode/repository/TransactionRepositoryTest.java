@@ -9,6 +9,8 @@ import com.example.rewardyourteachersq011bjavapode.models.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
@@ -33,9 +35,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
         localDateTime = LocalDateTime.of(2022, Month.FEBRUARY, 12, 12, 12);
         userRepository.save(user);
         transactionRepository.saveAllAndFlush(List.of(
-                new Transaction("101", TransactionType.DEBIT, "vincent sent me money", user),
-                new Transaction("102", TransactionType.DEBIT, "wallet funded", user),
-                new Transaction("103", TransactionType.DEBIT, "deposit", user)
+                new Transaction("101", TransactionType.DEBIT, "vincent sent me money", BigDecimal.valueOf(10),user),
+                new Transaction("102", TransactionType.DEBIT, "wallet funded",BigDecimal.valueOf(50), user),
+                new Transaction("103", TransactionType.DEBIT, "deposit", BigDecimal.valueOf(20),user)
         ));
     }
 

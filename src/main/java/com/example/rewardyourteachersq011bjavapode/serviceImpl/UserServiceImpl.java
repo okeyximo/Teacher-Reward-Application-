@@ -1,10 +1,8 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 
-import com.example.rewardyourteachersq011bjavapode.enums.NotificationType;
-import com.example.rewardyourteachersq011bjavapode.event.OnUserLogoutSuccessEvent;
-import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.dto.UserDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.UserProfileDto;
@@ -16,13 +14,12 @@ import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundExcept
 import com.example.rewardyourteachersq011bjavapode.models.Teacher;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.models.Wallet;
-import com.example.rewardyourteachersq011bjavapode.repository.SubjectRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.TeacherRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.UserRepository;
 import com.example.rewardyourteachersq011bjavapode.repository.WalletRepository;
 import com.example.rewardyourteachersq011bjavapode.response.ApiResponse;
-import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 import com.example.rewardyourteachersq011bjavapode.response.UserRegistrationResponse;
+import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 import com.example.rewardyourteachersq011bjavapode.service.UserService;
 import com.example.rewardyourteachersq011bjavapode.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +30,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +46,7 @@ public class UserServiceImpl implements UserService {
     private final UserUtil userUtil;
     private final NotificationService notificationService;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final JwtUtil jwtUtil;
 
 
     @Override
@@ -100,6 +96,7 @@ public class UserServiceImpl implements UserService {
 
     private UserProfileDto convertModelToDto(Teacher teacher) {
         UserProfileDto dto = new UserProfileDto();
+        dto.setId(teacher.getId());
         dto.setName(teacher.getName());
         dto.setSchool(teacher.getSchool());
         dto.setPost(teacher.getPost());

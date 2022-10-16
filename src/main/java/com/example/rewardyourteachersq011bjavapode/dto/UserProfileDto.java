@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserProfileDto {
+    private Long id;
     private String about;
     private String name;
     private String School;

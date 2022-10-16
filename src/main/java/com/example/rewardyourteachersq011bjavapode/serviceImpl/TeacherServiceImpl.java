@@ -1,6 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
@@ -25,7 +26,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -46,6 +46,8 @@ public class TeacherServiceImpl implements ITeacherService {
     private final WalletRepository walletRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserUtil userUtil;
+
+    private final JwtUtil jwtUtil;
 
 
 
@@ -77,7 +79,7 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException {
+    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto) throws IOException {
         String email = teacherDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
 
@@ -90,7 +92,7 @@ public class TeacherServiceImpl implements ITeacherService {
             teacher.setTeachingPeriod(teacherDto.getTeachingPeriod());
             teacher.setSchoolType(teacherDto.getSchoolType());
             teacher.setRole(TEACHER);
-            teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
+           // teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
             Wallet userWallet = new Wallet(new BigDecimal("0"), teacher);
             walletRepository.save(userWallet);
@@ -106,5 +108,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     }
 
+
 }
+
 
