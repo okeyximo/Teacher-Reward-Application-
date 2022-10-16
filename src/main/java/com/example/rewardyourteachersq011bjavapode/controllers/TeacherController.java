@@ -10,6 +10,7 @@ import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.response.*;
 import com.example.rewardyourteachersq011bjavapode.service.CurrentUser;
 import com.example.rewardyourteachersq011bjavapode.service.ITeacherService;
+import com.example.rewardyourteachersq011bjavapode.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.OK;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class TeacherController {
     private final UserService userService;
     private final ResponseService<ApiResponse<List<User>>> responseService;
     private final ITeacherService teacherService;
+    private final NotificationService notificationService;
 
     @GetMapping("/getAllWithPagination/{pageNo}/{pageSize}/{schoolName}")
     public Page<TeacherDetails> getAllTeachersBySchoolWithPagination(@PathVariable("pageNo") int pageNo,
@@ -72,6 +76,12 @@ public class TeacherController {
         return new ResponseEntity<>(teacherService.registerTeacher(teacherDto), HttpStatus.CREATED);
     }
 
+
+    @GetMapping("/most-recent-notification")
+    public ResponseEntity<?> retrieveUserNotifications (){
+        log.info("user notification retrieve successfully");
+        return new ResponseEntity<>(notificationService.retrieveUserMostRecentNotification(), OK);
+    }
 }
 
 
