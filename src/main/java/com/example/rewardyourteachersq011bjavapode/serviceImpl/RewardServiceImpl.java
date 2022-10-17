@@ -6,7 +6,6 @@ import com.example.rewardyourteachersq011bjavapode.enums.Role;
 import com.example.rewardyourteachersq011bjavapode.enums.TransactionType;
 import com.example.rewardyourteachersq011bjavapode.exceptions.UserNotFoundException;
 import com.example.rewardyourteachersq011bjavapode.exceptions.WalletNotFoundException;
-import com.example.rewardyourteachersq011bjavapode.models.Transaction;
 import com.example.rewardyourteachersq011bjavapode.models.User;
 import com.example.rewardyourteachersq011bjavapode.models.Wallet;
 import com.example.rewardyourteachersq011bjavapode.repository.TransactionRepository;
@@ -51,7 +50,7 @@ public class RewardServiceImpl implements RewardService {
             receiversWallet.setBalance(receiversWallet.getBalance().add(amount));
             walletRepository.saveAll(List.of(sendersWallet, receiversWallet));
             notificationService.saveNotification(receiverID , "You received ₦" + amount + " from " + sender.getName(), NotificationType.CREDIT_NOTIFICATION);
-            notificationService.saveNotification(receiver.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
+            notificationService.saveNotification(sender.getId(), "You sent ₦" + amount + " to " + receiver.getName(), NotificationType.DEBIT_NOTIFICATION);
             transactionService.saveTransaction(amount, TransactionType.DEBIT, sender, receiver);
             transactionService.saveTransaction(amount, TransactionType.CREDIT, sender, receiver);
          }else{
