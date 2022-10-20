@@ -30,6 +30,6 @@ public interface UserService {
 
     ApiResponse<String> editUserProfile(CustomUserDetails currentUser, UserEditProfileDto userEditProfileDto);
     UserRegistrationResponse registerUser(UserDto userDto);
-
+    ApiResponse<UserProfileDto> viewUserProfile(Long id);
 
 }

@@ -17,11 +17,13 @@ import java.time.LocalDateTime;
 public class Message extends BaseClass{
 
     private String messageBody;
+    private String senderName;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId" , referencedColumnName = "id")
     private User user;
+
 
 
 }

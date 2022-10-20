@@ -1,6 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.serviceImpl;
 
 import com.example.rewardyourteachersq011bjavapode.config.Security.CustomUserDetails;
+import com.example.rewardyourteachersq011bjavapode.config.Security.JwtUtil;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherDetails;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherEditProfileDto;
 import com.example.rewardyourteachersq011bjavapode.dto.TeacherRegistrationDto;
@@ -25,7 +26,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -47,19 +47,21 @@ public class TeacherServiceImpl implements ITeacherService {
     private final PasswordEncoder passwordEncoder;
     private final UserUtil userUtil;
 
+    private final JwtUtil jwtUtil;
+
 
 
     @Override
     public Page<TeacherDetails> getAllTeacherBySchoolWithPagination(int pageNo, int pageSize, String schoolName) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        List<TeacherDetails> teacherDetailsList = teacherRepository.findAllBySchool(schoolName, pageable).stream().map(teacher -> new TeacherDetails(teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod())).collect(Collectors.toList());
+        List<TeacherDetails> teacherDetailsList = teacherRepository.findAllBySchool(schoolName, pageable).stream().map(teacher -> new TeacherDetails(teacher.getId(),  teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod() , teacher.getRole())).collect(Collectors.toList());
         return new PageImpl<>(teacherDetailsList, pageable, teacherDetailsList.size());
     }
 
     @Override
     public Page<TeacherDetails> getAllTeachersWithPagination(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        List<TeacherDetails> teacherDetailsList = teacherRepository.findAll(pageable).stream().map(teacher -> new TeacherDetails(teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod())).collect(Collectors.toList());
+        List<TeacherDetails> teacherDetailsList = teacherRepository.findAll(pageable).stream().map(teacher -> new TeacherDetails(teacher.getId(),  teacher.getName(), teacher.getSchool(), teacher.getTeachingPeriod() , teacher.getRole())).collect(Collectors.toList());
         return new PageImpl<>(teacherDetailsList, pageable, teacherDetailsList.size());
     }
 
@@ -68,6 +70,7 @@ public class TeacherServiceImpl implements ITeacherService {
         Teacher teacher =  teacherRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException("teacher's details not found"));
         teacher.setName(teacherEditProfileDto.getName());
         teacher.setSchool(teacherEditProfileDto.getSchool());
+        teacher.setTelephone(teacherEditProfileDto.getTelephone());
         teacher.setTeachingPeriod(teacherEditProfileDto.getTeachingPeriod());
         teacher.setSchoolType(teacherEditProfileDto.getSchoolType());
         teacherRepository.save(teacher);
@@ -76,7 +79,7 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto, MultipartFile teacherId) throws IOException {
+    public UserRegistrationResponse registerTeacher(TeacherRegistrationDto teacherDto) throws IOException {
         String email = teacherDto.getEmail();
         Optional<User> existingUser = userRepository.findUserByEmail(email);
 
@@ -89,11 +92,10 @@ public class TeacherServiceImpl implements ITeacherService {
             teacher.setTeachingPeriod(teacherDto.getTeachingPeriod());
             teacher.setSchoolType(teacherDto.getSchoolType());
             teacher.setRole(TEACHER);
-            teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
+           // teacher.setTeacherIdUrl(userUtil.uploadImage(teacherId));
             userRepository.save(teacher);
             Wallet userWallet = new Wallet(new BigDecimal("0"), teacher);
             walletRepository.save(userWallet);
-
 
             teacherDto.getSubjectList().forEach(subject -> {
                 subjectRepository.save(new Subject(subject, teacher));
@@ -106,5 +108,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     }
 
+
 }
+
 

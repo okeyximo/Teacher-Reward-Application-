@@ -50,6 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
         InitializeTransactionResponse initializeTransactionResponse = null;
         try {
             Gson gson = new Gson();
+            request.setAmount(request.getAmount().multiply(BigDecimal.valueOf(100)));
             StringEntity postingString = new StringEntity(gson.toJson(request));
             HttpClient client = HttpClientBuilder.create().build();
             HttpPost post = new HttpPost("https://api.paystack.co/transaction/initialize");
@@ -81,7 +82,7 @@ public class PaymentServiceImpl implements PaymentService {
         trackReference.put(reference, email);
         return initializeTransactionResponse;
     }
-
+// todo : fix
     @Override
     public VerifyTransactionResponse verifyTransaction(String reference) {
         Transaction transaction = new Transaction();
@@ -109,7 +110,8 @@ public class PaymentServiceImpl implements PaymentService {
             } else if (payStackResponse.getData().getStatus().equals("success")) {
                 BigDecimal amount = payStackResponse.getData().getAmount();
                 String email = trackReference.get(reference);
-                fundWallet(email, amount);
+                fundWallet(email, amount.divide(BigDecimal.valueOf(100)));
+                trackReference.remove(reference);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -122,7 +124,7 @@ public class PaymentServiceImpl implements PaymentService {
         Wallet wallet = walletRepository.findWalletByUserEmail(email).orElseThrow(() -> new WalletNotFoundException("Wallet not found"));
         wallet.setBalance(wallet.getBalance().add(amount));
         walletRepository.save(wallet);
-        String response = "Credit!, Amt: %s; Wallet Balance: %s".formatted(amount.toString(), wallet.getBalance().toString());
+        String response = "Credit!, You just deposited ₦%s ; Wallet Balance ₦%s".formatted(amount.toString(), wallet.getBalance().toString());
         log.info("User with email %s successfully deposited %s to his wallet".formatted(email, amount));
         notificationService.saveNotification(email, response, CREDIT_NOTIFICATION);
     }

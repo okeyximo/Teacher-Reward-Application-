@@ -3,7 +3,10 @@ package com.example.rewardyourteachersq011bjavapode.config.Security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,8 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +32,7 @@ import java.io.FileReader;
 public class SecurityConfig {
     private final JwtFilter jwtRequestFilter;
     private final UserDetailsService userDetailsService;
+
     private final String path = "/api/v1";
 
     @Bean
@@ -37,7 +45,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .antMatcher(path+"/**")
                 .authorizeRequests()
-                .antMatchers("/api/auth/**", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs")
+                .antMatchers("/api/auth/**", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs" , "/api/schools/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().oauth2Login()
@@ -55,8 +63,22 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedOrigins(Collections.singletonList("*"));
+        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
 }

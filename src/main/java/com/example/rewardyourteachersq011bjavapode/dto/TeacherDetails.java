@@ -1,5 +1,7 @@
 package com.example.rewardyourteachersq011bjavapode.dto;
 
-public record TeacherDetails(String name, String School, String teachingPeriod) {
+import com.example.rewardyourteachersq011bjavapode.enums.Role;
+
+public record TeacherDetails(Long id, String name, String School, String teachingPeriod , Role role) {
 
 }
