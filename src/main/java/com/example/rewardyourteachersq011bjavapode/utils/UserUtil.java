@@ -79,6 +79,7 @@ public class UserUtil {
     public User findUserById(Long id){
         return userRepository.findById(id)
                 .orElseThrow(()-> new UserNotFoundException("Teacher Not Found"));
+
     }
 
 }
